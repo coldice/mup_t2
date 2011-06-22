@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/tvrooms"
   android:layout_width="fill_parent"
-  android:orientation="vertical" android:layout_height="wrap_content">
-    <TextView android:text="room overview" android:id="@+id/txt_roomhead" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-    <ListView android:id="@+id/lsv_roomlist" android:layout_width="fill_parent" android:layout_height="280dip"></ListView>
-    <RelativeLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/rl_roomsublayout">
-        <Button android:layout_height="40px" android:layout_width="wrap_content" android:text="Refresh" android:id="@+id/btn_rmrefresh" android:layout_alignParentRight="true"></Button>
+  android:orientation="vertical" android:layout_height="fill_parent">
+    <RelativeLayout android:layout_width="fill_parent" android:id="@+id/rl_roomsublayout" android:layout_height="60dip" android:layout_gravity="center_vertical|fill|bottom">
+        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/txt_roomhead" android:textSize="26px" android:layout_marginBottom="10px" android:text="room overview" android:layout_marginLeft="4px"></TextView>
+        <Button android:text="Refresh Rooms" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:id="@+id/btn_rmrefresh" android:layout_height="wrap_content"></Button>
     </RelativeLayout>
+    <LinearLayout android:id="@+id/linearLayout2" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ListView android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/lsv_roomlist"></ListView>
+    </LinearLayout>
 </LinearLayout>
