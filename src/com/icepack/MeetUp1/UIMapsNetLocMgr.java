@@ -23,6 +23,8 @@ public class UIMapsNetLocMgr {
 		this.locTrackerList = locTrackerList;
 		this.clientComm = clientComm;
 		this.refMapView = refMapView;
+		
+		mapOvItemMgrArr = new ArrayList<MapsOverlayItemMgr>();
 	}
 	
 	public void addLocUser(MUUser user) {

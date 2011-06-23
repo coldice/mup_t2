@@ -81,6 +81,7 @@ public class UIMaps extends MapActivity {
         netLocMgr = new UIMapsNetLocMgr(locTrackerList, clientComm, mMapView);
         netLocMgr.uiHelperRef = this.uiHelper; //to be wrapped in constructer/method
         netLocMgr.fLocDrawable = this.getResources().getDrawable(R.drawable.mark2);
+        //this sets drawable for secondary items
         
         mapOverlays.add(mapsOverlays);
         
