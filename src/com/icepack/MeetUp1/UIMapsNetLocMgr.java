@@ -30,6 +30,7 @@ public class UIMapsNetLocMgr {
 		mapNetOverlays.add(newDraw);
 		this.locTrackerList.add(newTracker);
 		this.refMapView.getOverlays().add(mapNetOverlays.get(mapNetOverlays.size()-1));
+		newDraw.sel_col = user.id;
 	}
 	
 	public void cleanLocUser() {

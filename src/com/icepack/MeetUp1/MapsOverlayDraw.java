@@ -23,7 +23,7 @@ public class MapsOverlayDraw extends Overlay {
 
 	public ArrayList<MULocation> MULocPoints = new ArrayList<MULocation>();
 	private ArrayList<Point> locPoints = new ArrayList<Point>();
-	private Paint dPaint1;
+
 	private Path dPath1;
 	private MapView mapView;
 	
@@ -41,6 +41,12 @@ public class MapsOverlayDraw extends Overlay {
 	private Drawable itemDrawable;
 	private List<Overlay> mapOverlays;
 	
+	public int sel_col = 0;
+	
+	Paint dPaint0;
+	Paint dPaint1;
+	Paint dPaint2;
+	Paint dPaint3;
 	
 	public MapsOverlayDraw(MapView mapView) {
 		//this.mapProjection = mapsViewProjection;
@@ -50,14 +56,42 @@ public class MapsOverlayDraw extends Overlay {
 		
 		this.mapProjection = mapView.getProjection();
 		//set up draw parameters
-		dPaint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
+		dPaint0 = new Paint(Paint.ANTI_ALIAS_FLAG);
+        dPaint0.setDither(true);
+        dPaint0.setColor(Color.RED);
+        dPaint0.setStyle(Paint.Style.STROKE);
+
+        dPaint0.setStrokeJoin(Paint.Join.ROUND);
+        dPaint0.setStrokeCap(Paint.Cap.ROUND);
+        dPaint0.setStrokeWidth(2);
+
+        dPaint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
         dPaint1.setDither(true);
-        dPaint1.setColor(Color.RED);
+        dPaint1.setColor(Color.GREEN);
         dPaint1.setStyle(Paint.Style.STROKE);
 
         dPaint1.setStrokeJoin(Paint.Join.ROUND);
         dPaint1.setStrokeCap(Paint.Cap.ROUND);
         dPaint1.setStrokeWidth(2);
+
+        
+        dPaint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
+        dPaint2.setDither(true);
+        dPaint2.setColor(Color.BLUE);
+        dPaint2.setStyle(Paint.Style.STROKE);
+
+        dPaint2.setStrokeJoin(Paint.Join.ROUND);
+        dPaint2.setStrokeCap(Paint.Cap.ROUND);
+        dPaint2.setStrokeWidth(2);
+        
+        dPaint3 = new Paint(Paint.ANTI_ALIAS_FLAG);
+        dPaint3.setDither(true);
+        dPaint3.setColor(Color.YELLOW);
+        dPaint3.setStyle(Paint.Style.STROKE);
+
+        dPaint3.setStrokeJoin(Paint.Join.ROUND);
+        dPaint3.setStrokeCap(Paint.Cap.ROUND);
+        dPaint3.setStrokeWidth(2);
         
         //overlay items
         //drawable = getP .getResources().getDrawable(R.drawable.mark1);
@@ -127,7 +161,15 @@ public class MapsOverlayDraw extends Overlay {
 
         dPath1.moveTo(locPoints.get(0).x, locPoints.get(0).y);
 
-        canvas.drawPath(dPath1, dPaint1);
+        if(this.sel_col==1) {
+        	canvas.drawPath(dPath1, dPaint1);
+        } else if(this.sel_col==2)
+        {
+        	canvas.drawPath(dPath1, dPaint2);
+        } else {
+        	canvas.drawPath(dPath1, dPaint3);
+        }
+        
         
         
 	}
