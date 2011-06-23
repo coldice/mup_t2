@@ -44,4 +44,9 @@ public class UIHelper {
 	{
 		txtTopstat.setText(message);
 	}
+	
+	public void displayAlert(String message)
+	{
+		
+	}
 }

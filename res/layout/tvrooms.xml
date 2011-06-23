@@ -8,7 +8,10 @@
         <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/txt_roomhead" android:textSize="26px" android:layout_marginBottom="10px" android:text="room overview" android:layout_marginLeft="4px"></TextView>
         <Button android:text="Refresh Rooms" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:id="@+id/btn_rmrefresh" android:layout_height="wrap_content"></Button>
     </RelativeLayout>
-    <LinearLayout android:id="@+id/linearLayout2" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <ListView android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/lsv_roomlist"></ListView>
-    </LinearLayout>
+        
+    <HorizontalScrollView android:id="@+id/horizontalScrollView1" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="fill_parent" android:orientation="horizontal">
+        	<ListView android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/lsv_roomlist"></ListView>
+        </LinearLayout>
+    </HorizontalScrollView>
 </LinearLayout>

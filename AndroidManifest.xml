@@ -14,11 +14,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+    
         
-        <activity android:name=".dummyClass1">
+        <activity android:name=".UIRooms">
         </activity>
         
         <activity android:name=".UIMaps">
+        </activity>
+        
+        <activity android:name=".UISettings">
         </activity>
 
     </application>
