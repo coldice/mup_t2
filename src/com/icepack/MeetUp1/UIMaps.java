@@ -194,5 +194,13 @@ public class UIMaps extends MapActivity {
 		
 		userList = tmpUserList;
 	}
+	
+	public void setupOwnUserData() {
+		ArrayList<MULocation> tmpLocList = clientComm.getLocation(this.uiHelper.getStOwnUserId(), 1);
+		
+		this.uiHelper.dispMsg("got point list with"+tmpLocList.size()+" items");
+		OwnLocTracker.refinedLocP.clear();
+		OwnLocTracker.refinedLocP = tmpLocList;
+	}
 
 }
