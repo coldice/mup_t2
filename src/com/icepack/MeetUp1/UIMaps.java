@@ -196,7 +196,7 @@ public class UIMaps extends MapActivity {
 	public void updateUserDataList() {
 		ArrayList<MUUser> tmpUserList = clientComm.getUserList(this.uiHelper.getStOwnUserId());
 		
-		this.uiHelper.dispMsg("got userlist with"+tmpUserList.size()+" user");
+		this.uiHelper.dispMsg("got userlist with "+tmpUserList.size()+" user");
 		
 		userList = tmpUserList;
 		

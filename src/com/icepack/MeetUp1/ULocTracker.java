@@ -79,6 +79,7 @@ public class ULocTracker {
 		if(refinedLocP.size()>maxPointNum)
 		{
 			refinedLocP.remove(0);
+			uiHelper.dispMsg("removed 1 point for user "+locUser.id);
 		}
 		
 		//geoLocPoint = new GeoPoint((int)(currentLoc.getLatitude()*1E6), (int)(currentLoc.getLongitude()*1E6));
@@ -90,6 +91,25 @@ public class ULocTracker {
 	public ArrayList<MULocation> getRefinedLocs()
 	{
 		return refinedLocP;
+	}
+	
+	public void postRefineLocs()
+	{
+		if(this.refinedLocP.size() > maxPointNum) {
+			uiHelper.dispMsg("too many points - refining (uid:"+locUser.id+")");
+			int isize = this.refinedLocP.size();
+			int difsize = isize - maxPointNum;
+			
+			ArrayList<MULocation> tmpPoints = new ArrayList<MULocation>();
+			
+			for(int i=difsize; i<isize; i++) {
+				tmpPoints.add(this.refinedLocP.get(i));
+			}
+			
+			this.refinedLocP = tmpPoints;
+			
+			uiHelper.dispMsg("done refining");
+		}
 	}
 	
 	private void dispatchMessage(String message, int tgt)
