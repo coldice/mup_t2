@@ -30,6 +30,7 @@ public class UIMapsNetLocMgr {
 	public void addLocUser(MUUser user) {
 		ULocTracker newTracker = new ULocTracker();
 		newTracker.setLocUser(user);
+		newTracker.uiHelper = this.uiHelperRef;
 		
 		MapsOverlayDraw newDraw = new MapsOverlayDraw(refMapView);
 		newDraw.MULocPoints = newTracker.refinedLocP;
@@ -56,10 +57,12 @@ public class UIMapsNetLocMgr {
 		int icount = locTrackerList.size();
 		//for(ULocTracker uLocTracker : locTrackerList) {
 		for(int i=0;i<icount;i++) {
+			uiHelperRef.dispMsg("performing update for uid:"+locTrackerList.get(i).locUser.id);
 			
 			ArrayList<MULocation> newLocs = new ArrayList<MULocation>();
 			if(this.clientComm!=null) {
 				this.uiHelperRef.dispMsg("getLocation(uid:"+locTrackerList.get(i).locUser.id+"pid"+locTrackerList.get(i).lastLocId+")");
+				this.uiHelperRef.dispMsg("cur points:"+locTrackerList.get(i).refinedLocP.size());
 				newLocs = clientComm.getLocation(locTrackerList.get(i).locUser.id, locTrackerList.get(i).lastLocId);
 			}
 			
@@ -70,11 +73,15 @@ public class UIMapsNetLocMgr {
 				MULocation tmpLoc = locTrackerList.get(i).getRefinedLocs().get(locTrackerList.get(i).getRefinedLocs().size()-1);
 				GeoPoint newPoint = new GeoPoint((int)(tmpLoc.latitude*100000), (int)(tmpLoc.longitude*100000));
 				this.mapOvItemMgrArr.get(i).updateGPoint(newPoint, refMapView);
-				locTrackerList.get(i).lastLocId = locTrackerList.get(i).refinedLocP.get(locTrackerList.get(i).getRefinedLocs().size()-1).id;
+				if(locTrackerList.get(i).getRefinedLocs().size()>=1) {
+					locTrackerList.get(i).lastLocId = locTrackerList.get(i).refinedLocP.get(locTrackerList.get(i).getRefinedLocs().size()-1).id;
+					locTrackerList.get(i).postRefineLocs();
+				}
 			}
 			
 			if(this.uiHelperRef != null) {
 				this.uiHelperRef.dispMsg("got "+newLocs.size()+" locs for uid: "+locTrackerList.get(i).locUser.id);
+				this.uiHelperRef.dispMsg("new cur points:"+locTrackerList.get(i).refinedLocP.size());
 			}
 		}
 	}

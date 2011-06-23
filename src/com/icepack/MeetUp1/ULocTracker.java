@@ -95,6 +95,7 @@ public class ULocTracker {
 	
 	public void postRefineLocs()
 	{
+		uiHelper.dispMsg("postrefine userid: (uid:"+locUser.id+")");
 		if(this.refinedLocP.size() > maxPointNum) {
 			uiHelper.dispMsg("too many points - refining (uid:"+locUser.id+")");
 			int isize = this.refinedLocP.size();
