@@ -222,7 +222,6 @@ public class ClientCommunicationHttp {
 		}
 	}
 	
-	
 	public ArrayList<MUUser> getUserList(int userId) {
 		try {
 			JSONObject jObj = new JSONObject();
