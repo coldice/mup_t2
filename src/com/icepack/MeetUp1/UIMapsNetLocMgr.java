@@ -42,6 +42,7 @@ public class UIMapsNetLocMgr {
 		newImgr.tfunc1(fLocDrawable, refMapView, newTracker.geoLocPoint);
 		//above line add the mark to the manager
 		mapOvItemMgrArr.add(newImgr);
+		this.uiHelperRef.dispMsg("setting up marker for uid"+user.id);
 		newDraw.sel_col = user.id;
 	}
 	
@@ -58,7 +59,7 @@ public class UIMapsNetLocMgr {
 			
 			ArrayList<MULocation> newLocs = new ArrayList<MULocation>();
 			if(this.clientComm!=null) {
-				this.uiHelperRef.dispMsg("getLocation(uid:"+locTrackerList.get(i).locUser.id+"pid"+locTrackerList.get(i).lastLocId);
+				this.uiHelperRef.dispMsg("getLocation(uid:"+locTrackerList.get(i).locUser.id+"pid"+locTrackerList.get(i).lastLocId+")");
 				newLocs = clientComm.getLocation(locTrackerList.get(i).locUser.id, locTrackerList.get(i).lastLocId);
 			}
 			

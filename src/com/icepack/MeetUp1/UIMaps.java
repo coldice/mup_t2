@@ -160,6 +160,8 @@ public class UIMaps extends MapActivity {
 		
 		mapOvItemMgr.updateGPoint(tmpPoint, (MapView)this.findViewById(R.id.mapview1));
 		
+		
+		
 		//Update Online data
 		MULocation newMULoc = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime(), -1);
 		clientComm.setLocation(this.uiHelper.getStOwnUserId(), newMULoc);
