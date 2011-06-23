@@ -36,6 +36,7 @@ public class MapsOverlayDraw extends Overlay {
 	private OverlayItem ovIGeoLoc;
 	public MULocation geoLoc;
 	private GeoPoint geoLocPoint;
+	private ArrayList<GeoPoint>geoLocPoints;
 	
 	private Drawable itemDrawable;
 	private List<Overlay> mapOverlays;

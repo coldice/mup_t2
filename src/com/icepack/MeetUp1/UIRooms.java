@@ -134,7 +134,8 @@ public class UIRooms extends Activity {
 	}
 	
 	public void createRoom() {
-		//this.clientComm.genRoom();
+		String roomName = inpCreateName.getText().toString();
+		this.clientComm.createRoom(roomName);
 	}
 
 }
