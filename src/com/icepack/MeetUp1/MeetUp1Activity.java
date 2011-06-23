@@ -105,7 +105,7 @@ public class MeetUp1Activity extends TabActivity {
         ownPosTracker = new ULocTracker();
         
         this.uiHelper.setStOwnUserId(1);
-        this.uiHelper.setStServerIp("192.168.1.100");
+        this.uiHelper.setStServerIp("192.168.0.102");
         
         gpsMgr = new GPSMgr();
     	callClass.uiHelper = this.uiHelper;
