@@ -8,6 +8,7 @@ import android.text.format.DateFormat;
 
 import com.google.android.maps.GeoPoint;
 import com.icepack.MeetUp1.common.MULocation;
+import com.icepack.MeetUp1.common.MUUser;
 
 public class ULocTracker {
 	public ArrayList<MULocation> refinedLocP;// = new ArrayList<GeoPoint>();
@@ -21,6 +22,8 @@ public class ULocTracker {
 	public float lastPointDistance;
 	public int maxPointNum;
 	private DecimalFormat df1;
+	
+	public MUUser locUser;
 
 	
 	UIHelper uiHelper;
@@ -100,6 +103,14 @@ public class ULocTracker {
 			}
 			
 		}
+	}
+	
+	public void setLocUser(MUUser newuser) {
+		this.locUser = newuser;
+	}
+	
+	public MUUser getLocUser() {
+		return this.locUser;
 	}
 	
 	

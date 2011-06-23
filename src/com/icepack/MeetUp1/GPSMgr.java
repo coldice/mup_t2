@@ -59,7 +59,7 @@ public class GPSMgr implements LocationListener{
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
         
-        uiMapRef.updateLocData(location);
+        uiMapRef.updateOwnLocData(location);
     }
     @Override
     public void onProviderDisabled(String provider) {

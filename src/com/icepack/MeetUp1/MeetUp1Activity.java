@@ -24,6 +24,7 @@ public class MeetUp1Activity extends TabActivity {
 	GPSMgr gpsMgr;
 	UIMaps uiMaps;
 	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -103,11 +104,14 @@ public class MeetUp1Activity extends TabActivity {
         
         ownPosTracker = new ULocTracker();
         
+        this.uiHelper.setStOwnUserId(1);
+        this.uiHelper.setStServerIp("192.168.1.100");
         
         gpsMgr = new GPSMgr();
     	callClass.uiHelper = this.uiHelper;
     	callClass.uiHelper.dispMsg("system loaded!");
     	this.uiMaps = callClass;
+    	
     	
     	initTrackConnection();
     	

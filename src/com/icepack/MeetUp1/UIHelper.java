@@ -10,6 +10,11 @@ public class UIHelper {
 	private int statMsgCount = 0;
 	private int maxMsgCount = 50;
 	
+	//internal options
+	private int ST_own_userid;
+	private String ST_server;
+	
+	
 	public UIHelper(TextView txtStatusl, TextView txtStatusl2, TextView txtTopstatl)
 	{
 		this.txtStatus = txtStatusl;
@@ -17,6 +22,9 @@ public class UIHelper {
 		this.txtTopstat = txtTopstatl;
 		txtStatus.setText("fireup");
 		txtStatus2.setText("fireup");
+		
+		this.ST_own_userid = -1;
+		this.ST_server = "";
 	}
 	
 	public void dispMsg(String message)
@@ -45,8 +53,23 @@ public class UIHelper {
 		txtTopstat.setText(message);
 	}
 	
-	public void displayAlert(String message)
+	public void setStOwnUserId(int id)
 	{
-		
+		this.ST_own_userid = id;
+	}
+	
+	public void setStServerIp(String ip)
+	{
+		this.ST_server = ip;
+	}
+	
+	public int getStOwnUserId()
+	{
+		return this.ST_own_userid;
+	}
+	
+	public String getStServerIp()
+	{
+		return this.ST_server;
 	}
 }
