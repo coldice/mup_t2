@@ -70,7 +70,7 @@ public class UIMaps extends MapActivity {
         mapOverlays.add(mapsOverlays);
         
         
-        // *****************
+        // ******************
         // ui listeners
         
         rangeSel = (SeekBar) this.findViewById(R.id.rangeSel1);
