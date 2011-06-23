@@ -227,7 +227,13 @@ public class UIMaps extends MapActivity {
 		
 		this.uiHelper.dispMsg("got point list with"+tmpLocList.size()+" items");
 		OwnLocTracker.refinedLocP.clear();
-		OwnLocTracker.refinedLocP = tmpLocList;
+		for(MULocation tmpLocItem : tmpLocList) {
+			OwnLocTracker.refinedLocP.add(tmpLocItem);
+			if(OwnLocTracker.refinedLocP.size()-1 >=1) {
+				//OwnLocTracker.updateCurrentLoc(OwnLocTracker.refinedLocP.get(OwnLocTracker.refinedLocP.size()-1));
+			}
+		}
+		//OwnLocTracker.refinedLocP = tmpLocList;
 	}
 
 }
