@@ -43,8 +43,6 @@ public class UIRooms extends Activity {
         btnRefreshList.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	updateRoomList();
-            	
-            	
             }
         });
         

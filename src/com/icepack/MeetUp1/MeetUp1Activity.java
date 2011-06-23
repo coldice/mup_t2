@@ -42,8 +42,8 @@ public class MeetUp1Activity extends TabActivity {
 
         // UI Helper Setup
         uiHelper = new UIHelper();
-        this.uiHelper.setStOwnUserId(1);
-        this.uiHelper.setStServerIp("192.168.0.102");
+        this.uiHelper.setStOwnUserId(1); //DEBUG CONFIG
+        this.uiHelper.setStServerIp("192.168.0.102"); //DEBUG CONFIG
         
         this.clientComm = new ClientCommunicationHttp(this.uiHelper.getStServerIp(), 23232);
         
@@ -128,6 +128,12 @@ public class MeetUp1Activity extends TabActivity {
     }
     
     public void tabCallback2(UIRooms callClass)
+    {
+    	callClass.uiHelperRef = this.uiHelper;
+    	callClass.clientComm = this.clientComm;
+    }
+    
+    public void tabCallback3(UISettings callClass)
     {
     	callClass.uiHelperRef = this.uiHelper;
     	callClass.clientComm = this.clientComm;

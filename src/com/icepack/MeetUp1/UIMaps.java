@@ -168,6 +168,11 @@ public class UIMaps extends MapActivity {
 		//do more
 		
 		//update list
+		int icount = userList.size();
+		
+		for(int i=0;i<icount;i++) {
+			this.uiHelper.dispMsg("user: "+userList.get(i).username+" (id: "+userList.get(i).id+")");
+		}
 		
 		this.netLocMgr.updateUserLoc();
 	}
