@@ -14,6 +14,9 @@ public class UIHelper {
 	private int ST_own_userid;
 	private String ST_server;
 	
+	//set through
+	public int resetUserListFlag = 0;
+	
 	
 	public UIHelper()
 	{

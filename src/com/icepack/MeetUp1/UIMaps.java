@@ -194,6 +194,11 @@ public class UIMaps extends MapActivity {
 	}
 	
 	public void updateUserDataList() {
+		if(uiHelper.resetUserListFlag==1) {
+			this.userList.clear();
+			this.uiHelper.resetUserListFlag=0;
+			this.uiHelper.dispMsg("*** RESETTED USERLIST ***");
+		}
 		ArrayList<MUUser> tmpUserList = clientComm.getUserList(this.uiHelper.getStOwnUserId());
 		
 		this.uiHelper.dispMsg("got userlist with "+tmpUserList.size()+" user");

@@ -133,6 +133,7 @@ public class UIRooms extends Activity {
 	public void joinRoom(int roomId) {
 		this.clientComm.LogInToRoom(this.uiHelperRef.getStOwnUserId(), roomId);
 		this.showRoomListMessage("joining Room: "+roomId);
+		this.uiHelperRef.resetUserListFlag = 1;
 	}
 	
 	public void createRoom() {
