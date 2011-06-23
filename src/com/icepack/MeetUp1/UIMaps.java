@@ -180,6 +180,7 @@ public class UIMaps extends MapActivity {
 		//update list
 		int icount = userList.size();
 		
+		
 		for(int i=0;i<icount;i++) {
 			this.uiHelper.dispMsg("user: "+userList.get(i).username+" (id: "+userList.get(i).id+")");
 		}
@@ -193,6 +194,23 @@ public class UIMaps extends MapActivity {
 		this.uiHelper.dispMsg("got userlist with"+tmpUserList.size()+" items");
 		
 		userList = tmpUserList;
+		
+		int icount = userList.size();
+		int ocount = this.netLocMgr.locTrackerList.size();
+		boolean found=false;
+		for(int i=0; i<icount; i++) {
+			found=false;
+			for(int o=0; o<ocount; o++) {
+				if(this.netLocMgr.locTrackerList.get(o).getLocUser().id == userList.get(i).id) {
+					found=true;
+					break;
+				}
+			}
+			
+			if(found==false) {
+				this.netLocMgr.addLocUser(userList.get(i));
+			}
+		}
 	}
 	
 	public void setupOwnUserData() {
