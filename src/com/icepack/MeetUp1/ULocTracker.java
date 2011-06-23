@@ -49,7 +49,7 @@ public class ULocTracker {
 		if(refinedLocP.size()>=1)
 		{
 			Location.distanceBetween(currentLoc.latitude, currentLoc.longitude, refinedLocP.get(refinedLocP.size()-1).latitude, refinedLocP.get(refinedLocP.size()-1).longitude, lastPointDistanceData);
-			lastPointDistance = lastPointDistanceData[1];
+			lastPointDistance = Math.abs(lastPointDistanceData[1]);
 			dispatchMessage("dst1:"+lastPointDistanceData[0]+" dst2:"+lastPointDistanceData[1], 1);
 			
 		}

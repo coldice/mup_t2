@@ -209,9 +209,13 @@ public class UIMaps extends MapActivity {
 					break;
 				}
 			}
-			if(userList.get(i).id == this.uiHelper.getStOwnUserId()) myself=true;
+			if(userList.get(i).id == this.uiHelper.getStOwnUserId()) {
+				myself=true;
+				this.uiHelper.dispMsg("found myself! id:"+userList.get(i).id);
+			}
 			if(found==false&&myself==false) {
 				this.netLocMgr.addLocUser(userList.get(i));
+				this.uiHelper.dispMsg("added user! id:"+userList.get(i).id);
 			}
 		}
 	}

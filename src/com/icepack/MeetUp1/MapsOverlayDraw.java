@@ -161,7 +161,10 @@ public class MapsOverlayDraw extends Overlay {
 
         dPath1.moveTo(locPoints.get(0).x, locPoints.get(0).y);
 
-        if(this.sel_col==1) {
+        if (this.sel_col==0) {
+        	canvas.drawPath(dPath1, dPaint0);
+        }
+        else if(this.sel_col==1) {
         	canvas.drawPath(dPath1, dPaint1);
         } else if(this.sel_col==2)
         {
