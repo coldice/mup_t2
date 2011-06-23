@@ -46,8 +46,13 @@ public class UIRooms extends Activity {
         roomListView.setClickable(true);
         roomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        	  public void onClick(View v) {
-                  //code to be written to handle the click event
+        	  @Override
+        	  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+        	    Object o = roomListView.getItemAtPosition(position);
+        	    String pname = o.getClass().toString();
+        	    
+        	    showRoomListMessage("entered: "+pname);
         	  }
         	});
 	}
