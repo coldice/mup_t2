@@ -38,6 +38,7 @@ public class UIMapsNetLocMgr {
 		
 		MapsOverlayItemMgr newImgr = new MapsOverlayItemMgr();
 		newImgr.tfunc1(fLocDrawable, refMapView, newTracker.geoLocPoint);
+		//above line add the mark to the manager
 		mapOvItemMgrArr.add(newImgr);
 		newDraw.sel_col = user.id;
 	}

@@ -68,6 +68,7 @@ public class UIMaps extends MapActivity {
         
         mapsOverlays.MULocPoints = OwnLocTracker.refinedLocP;
 
+        
         mapOvItemMgr.tfunc1(this.getResources().getDrawable(R.drawable.mark1), (MapView)this.findViewById(R.id.mapview1), OwnLocTracker.geoLocPoint);
         
 
@@ -79,6 +80,7 @@ public class UIMaps extends MapActivity {
         //netref
         netLocMgr = new UIMapsNetLocMgr(locTrackerList, clientComm, mMapView);
         netLocMgr.uiHelperRef = this.uiHelper; //to be wrapped in constructer/method
+        netLocMgr.fLocDrawable = this.getResources().getDrawable(R.drawable.mark2);
         
         mapOverlays.add(mapsOverlays);
         
