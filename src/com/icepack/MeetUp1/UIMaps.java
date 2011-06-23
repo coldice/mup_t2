@@ -212,10 +212,9 @@ public class UIMaps extends MapActivity {
 		for(int i=0; i<icount; i++) {
 			found=false;
 			myself=false;
-			for(int o=0; o<ocount; o++) {
+			for(int o=0; o<ocount&&!found; o++) {
 				if(this.netLocMgr.locTrackerList.get(o).getLocUser().id == userList.get(i).id) {
 					found=true;
-					break;
 				}
 			}
 			if(userList.get(i).id == this.uiHelper.getStOwnUserId()) {
