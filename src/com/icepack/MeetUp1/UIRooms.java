@@ -33,8 +33,8 @@ public class UIRooms extends Activity {
         
         setContentView(R.layout.tvrooms);
         roomListView = (ListView)findViewById(R.id.lsv_roomlist);
+        btnCreateRoom = (Button)findViewById(R.id.btn_createRoom);
         btnRefreshList = (Button)findViewById(R.id.btn_rmrefresh);
-        btnCreateRoom = (Button)(Button)findViewById(R.id.btn_createRoom);
         inpCreateName = (EditText)findViewById(R.id.inp_roomname);
         
         createForm = (LinearLayout)findViewById(R.id.createForm);
