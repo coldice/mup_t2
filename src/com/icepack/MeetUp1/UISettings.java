@@ -1,5 +1,7 @@
 package com.icepack.MeetUp1;
 
+import java.util.Stack;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,9 +40,9 @@ public class UISettings extends Activity {
 	public void saveSettings() {
 		try {
 			this.uiHelperRef.setStServerIp(tVal1.getText().toString());
-			this.uiHelperRef.setStOwnUserId(Integer.getInteger(tVal2.getText().toString()));
+			this.uiHelperRef.setStOwnUserId(new Integer(tVal2.getText().toString()));
 		} catch (Exception e) {
-			
+			//error
 		}
     }
 	
