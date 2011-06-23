@@ -44,7 +44,7 @@ public class ULocTracker {
 	
 	public void updateCurrentLoc(Location newLoc)
 	{
-		currentLoc = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime());
+		currentLoc = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime(), -1);
 		
 		if(refinedLocP.size()>=1)
 		{
@@ -71,7 +71,7 @@ public class ULocTracker {
 		}
 		else
 		{
-			MULocation newPoint = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime());
+			MULocation newPoint = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime(), -1);
 			refinedLocP.set(refinedLocP.size()-1, newPoint);
 			//dispatchMessage("loc distance below min("+this.minPointDistance+")", 1);
 		}

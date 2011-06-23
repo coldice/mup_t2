@@ -105,6 +105,7 @@ public class UIRooms extends Activity {
 		//server call
 		if(this.clientComm!=null)
 		{
+			showRoomListMessage("con server:"+uiHelperRef.getStServerIp());
 			this.roomList = clientComm.getRoomList();
 		}
 		

@@ -161,7 +161,7 @@ public class UIMaps extends MapActivity {
 		mapOvItemMgr.updateGPoint(tmpPoint, (MapView)this.findViewById(R.id.mapview1));
 		
 		//Update Online data
-		MULocation newMULoc = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime());
+		MULocation newMULoc = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime(), -1);
 		clientComm.setLocation(this.uiHelper.getStOwnUserId(), newMULoc);
 	}
 	
@@ -173,7 +173,6 @@ public class UIMaps extends MapActivity {
 	public void updateNetLocs()
 	{
 		netLocMgr.updateUserLoc();
-		
 	}
 	
 	public void updateUserData()
@@ -195,7 +194,7 @@ public class UIMaps extends MapActivity {
 	public void updateUserDataList() {
 		ArrayList<MUUser> tmpUserList = clientComm.getUserList(this.uiHelper.getStOwnUserId());
 		
-		this.uiHelper.dispMsg("got userlist with"+tmpUserList.size()+" items");
+		this.uiHelper.dispMsg("got userlist with"+tmpUserList.size()+" user");
 		
 		userList = tmpUserList;
 		
