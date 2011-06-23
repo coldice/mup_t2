@@ -148,6 +148,7 @@ public class ClientCommunicationHttp {
 		}
 	}
 	
+	
 	public boolean setLocation(int userId, MULocation loc) {
 		try {
 			JSONObject jObj = new JSONObject();
