@@ -225,48 +225,4 @@ public class ClientCommunicationHttp {
 			return new ArrayList<MUUser>();
 		}
 	}
-
-	/**
-	 * Handles getYearMessage and the YearsArray in JSON
-	 * 
-	 * @throws JSONException
-	 *             on Communication errors
-	 */
-	public double[] getLocation(int key) {
-		try {
-			System.out.println("GetLocation");
-			JSONObject jObj = new JSONObject();
-			jObj.put("key", key);
-			JSONObject jRes = jPost(ComConstants.LOC_GET, jObj);
-			double[] loc = new double[2];
-			loc[0] = jRes.getDouble("long");
-			loc[1] = jRes.getDouble("lat");
-			return loc;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new double[1];
-		}
-	}
-
-
-	/**
-	 * Handles AddBookingEntryMessage
-	 * 
-	 * @param jObj
-	 *            the submitted body of the JSONMessage
-	 * @throws JSONException
-	 *             on Communication errors
-	 */
-	public void setLocation(int key, double longitude, double latitude) {
-		try {
-			System.out.println("SetLocation");
-			JSONObject jObj = new JSONObject();
-			jObj.put("key", key);
-			jObj.put("long", longitude);
-			jObj.put("lat", latitude);
-			jPost(ComConstants.LOC_SET, jObj);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }
