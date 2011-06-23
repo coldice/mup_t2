@@ -199,16 +199,18 @@ public class UIMaps extends MapActivity {
 		int icount = userList.size();
 		int ocount = this.netLocMgr.locTrackerList.size();
 		boolean found=false;
+		boolean myself=false;
 		for(int i=0; i<icount; i++) {
 			found=false;
+			myself=false;
 			for(int o=0; o<ocount; o++) {
 				if(this.netLocMgr.locTrackerList.get(o).getLocUser().id == userList.get(i).id) {
 					found=true;
 					break;
 				}
 			}
-			
-			if(found==false) {
+			if(userList.get(i).id == this.uiHelper.getStOwnUserId()) myself=true;
+			if(found==false&&myself==false) {
 				this.netLocMgr.addLocUser(userList.get(i));
 			}
 		}
