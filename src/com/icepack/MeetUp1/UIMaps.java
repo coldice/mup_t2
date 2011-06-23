@@ -68,9 +68,12 @@ public class UIMaps extends MapActivity {
         clientComm = new ClientCommunicationHttp(this.uiHelper.getStServerIp(), 23232);
         
         //netref
-        netLocMgr = new UIMapsNetLocMgr(locTrackerList);
+        netLocMgr = new UIMapsNetLocMgr(locTrackerList, clientComm, mMapView);
         
         mapOverlays.add(mapsOverlays);
+        
+        
+        
         
         
         // ******************

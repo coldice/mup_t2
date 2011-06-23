@@ -16,6 +16,8 @@ public class ULocTracker {
 	private MULocation lastSavedLoc;
 	public GeoPoint geoLocPoint;
 	
+	public int lastLocId;
+	
 	int maxTrackLength;
 	public float minPointDistance;
 	public float lastPointDistanceData[];
@@ -37,6 +39,7 @@ public class ULocTracker {
 		lastPointDistanceData = new float[2];
 		lastPointDistance = 0;
 		df1  = new DecimalFormat("0.00000");
+		lastLocId = 0;
 	}
 	
 	public void updateCurrentLoc(Location newLoc)
