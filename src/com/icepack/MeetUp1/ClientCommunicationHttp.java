@@ -213,7 +213,7 @@ public class ClientCommunicationHttp {
 		try {
 			JSONObject jObj = new JSONObject();
 			jObj.put("name", name);
-			JSONObject jRes = jPost(ComConstants.ROOM_GET);
+			JSONObject jRes = jPost(ComConstants.ROOM_CREATE);
 			return jRes.getInt("roomid");
 		} catch (Exception e) {
 			e.printStackTrace();
