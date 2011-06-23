@@ -209,11 +209,12 @@ public class ClientCommunicationHttp {
 			return new ArrayList<MURoom>();
 		}
 	}
+	
 	public ArrayList<MUUser> getUserList(int userId) {
 		try {
 			JSONObject jObj = new JSONObject();
 			jObj.put("userid", userId);
-			JSONObject jRes = jPost(ComConstants.ROOM_GET, jObj);
+			JSONObject jRes = jPost(ComConstants.ROOM_GETUSERS, jObj);
 			JSONArray jUsers = jRes.getJSONArray("users");
 			ArrayList<MUUser> users = new ArrayList<MUUser>();
 			for(int i=0; i< jUsers.length(); i++) {
