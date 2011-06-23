@@ -15,18 +15,19 @@ public class UIHelper {
 	private String ST_server;
 	
 	
-	public UIHelper(TextView txtStatusl, TextView txtStatusl2, TextView txtTopstatl)
+	public UIHelper()
 	{
+		this.ST_own_userid = -1;
+		this.ST_server = "";
+	}
+	
+	public void setupUIHelperViews(TextView txtStatusl, TextView txtStatusl2, TextView txtTopstatl) {
 		this.txtStatus = txtStatusl;
 		this.txtStatus2 = txtStatusl2;
 		this.txtTopstat = txtTopstatl;
 		txtStatus.setText("fireup");
 		txtStatus2.setText("fireup");
-		
-		this.ST_own_userid = -1;
-		this.ST_server = "";
 	}
-	
 	public void dispMsg(String message)
 	{
 		if(statMsgCount >= maxMsgCount)

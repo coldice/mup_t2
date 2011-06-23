@@ -3,11 +3,14 @@ package com.icepack.MeetUp1;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.icepack.MeetUp1.common.MURoom;
@@ -15,31 +18,50 @@ import com.icepack.MeetUp1.common.MURoom;
 public class UIRooms extends Activity {
 	ListView roomListView;
 	Button btnRefreshList;
+	Button btnCreateRoom;
 	String roomdata_arr[];
 	ArrayList<MURoom> roomList;
+	int currentMenuState;
+	ClientCommunicationHttp clientComm;
+	UIHelper uiHelperRef;
+	
+	EditText inpCreateName;
+	LinearLayout createForm;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.tvrooms);
         roomListView = (ListView)findViewById(R.id.lsv_roomlist);
+        btnCreateRoom = (Button)findViewById(R.id.btn_createRoom);
         btnRefreshList = (Button)findViewById(R.id.btn_rmrefresh);
+        inpCreateName = (EditText)findViewById(R.id.inp_roomname);
+        
+        createForm = (LinearLayout)findViewById(R.id.createForm);
+        createForm.setVisibility(8);
         
         roomdata_arr = new String[1];
         roomdata_arr[0] = "loading...";
         roomList = new ArrayList<MURoom>();
+        currentMenuState = 1;
+        
         //ad
         //roomListView.setAdapter(adapter)
         //roomListView.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, COUNTRIES));
         roomListView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 , roomdata_arr));
         
+        ((MeetUp1Activity)this.getParent()).tabCallback2(this);
         
         //OnClick Listeners
         btnRefreshList.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	updateRoomList();
-            	
-            	
+            }
+        });
+        
+        btnCreateRoom.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	createRoom();
             }
         });
         
@@ -47,24 +69,45 @@ public class UIRooms extends Activity {
         roomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
         	  @Override
-        	  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+        	  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        	    Object o = roomListView.getItemAtPosition(position);
-        	    String pname = o.getClass().toString();
+        		Object obj = roomListView.getItemAtPosition(position);
+          	    String pname = (String) obj;
+          	    
+          	    if(currentMenuState==1) {
+          	    	if(roomList.get(position).id == -2) {
+          	    		createForm.setVisibility(0);
+          	    	} else {
+          	    		joinRoom(position);
+          	    	}
+          	    }
+              }
+          });
+
         	    
-        	    showRoomListMessage("entered: "+pname);
-        	  }
-        	});
+	}
+	
+	public void setClientComm(ClientCommunicationHttp newClientComm) {
+		this.clientComm = newClientComm;
+	}
+	
+	public void setClientUIHelper(UIHelper newUIHelper) {
+		this.uiHelperRef = newUIHelper;
 	}
 	
 	public void updateRoomList() {
+		createForm.setVisibility(8);
+		
 		//refresh the roomlist
 		roomList.clear();
 		
-		//TODO: implement server get here
+		//server call
+		if(this.clientComm!=null)
+		{
+			this.roomList = clientComm.getRoomList();
+		}
 		
-		roomList.add(new MURoom(-1, "testentry"));
-		//
+		roomList.add(0, new MURoom(-2, "neuen Raum erstellen"));
 		
 		//set up ui list
 		int roomCount = roomList.size();
@@ -79,8 +122,19 @@ public class UIRooms extends Activity {
 	}
 	
 	public void showRoomListMessage(String message) {
-		roomList.clear();
-		roomList.add(new MURoom(-1, message));
+		roomdata_arr = new String[1];
+		roomdata_arr[0] = message;
+		roomListView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 , roomdata_arr));
+		
+	}
+	
+	public void joinRoom(int roomId) {
+		this.clientComm.LogInToRoom(this.uiHelperRef.getStOwnUserId(), roomId);
+		this.showRoomListMessage("joining Room: "+roomId);
+	}
+	
+	public void createRoom() {
+		//this.clientComm.genRoom();
 	}
 
 }

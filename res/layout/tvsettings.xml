@@ -6,7 +6,7 @@
   android:layout_height="fill_parent" android:orientation="vertical">
     <RelativeLayout android:layout_width="fill_parent" android:id="@+id/rl_roomsublayout" android:gravity="bottom" android:layout_gravity="fill|bottom" android:layout_height="60dip">
         <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/txt_setting" android:textSize="26px" android:layout_marginBottom="10px" android:text="Settings" android:layout_marginLeft="4px"></TextView>
-        <Button android:text="Save Settings" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:id="@+id/btn_rmrefresh" android:layout_height="wrap_content"></Button>
+        <Button android:text="Save Settings" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:id="@+id/btnsaveset" android:layout_height="wrap_content"></Button>
     </RelativeLayout>
     <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/txt_tdesc1" android:text="Server Ip" android:layout_marginLeft="14px"></TextView>
     <EditText android:id="@+id/inp_val1" android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="0.0.0.0"></EditText>
