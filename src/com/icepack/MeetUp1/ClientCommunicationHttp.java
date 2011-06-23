@@ -209,6 +209,17 @@ public class ClientCommunicationHttp {
 			return new ArrayList<MURoom>();
 		}
 	}
+	public int createRoom(String name) {
+		try {
+			JSONObject jObj = new JSONObject();
+			jObj.put("name", name);
+			JSONObject jRes = jPost(ComConstants.ROOM_GET);
+			return jRes.getInt("roomid");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 	
 	public ArrayList<MUUser> getUserList(int userId) {
 		try {
