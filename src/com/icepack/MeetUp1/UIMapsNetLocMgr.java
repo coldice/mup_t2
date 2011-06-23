@@ -66,6 +66,15 @@ public class UIMapsNetLocMgr {
 				newLocs = clientComm.getLocation(locTrackerList.get(i).locUser.id, locTrackerList.get(i).lastLocId);
 			}
 			
+			if(newLocs.size()==1) {
+				this.uiHelperRef.dispMsg("got only one point, hot update");
+				
+				GeoPoint newPoint = new GeoPoint((int)(newLocs.get(0).latitude*100000), (int)(newLocs.get(0).longitude*100000));
+				this.mapOvItemMgrArr.get(i).updateGPoint(newPoint, refMapView);
+				this.locTrackerList.get(i).setCurrentPoint(newLocs.get(0));
+				break;
+			}
+			
 			for(MULocation newLocPoint: newLocs) {
 				locTrackerList.get(i).refinedLocP.add(newLocPoint);
 			}

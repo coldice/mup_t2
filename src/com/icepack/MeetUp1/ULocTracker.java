@@ -137,5 +137,18 @@ public class ULocTracker {
 		return this.locUser;
 	}
 	
+	public void setCurrentPoint(MULocation newloc) {
+		this.currentLoc = newloc;
+		if(this.refinedLocP.size()>=1) {
+			this.refinedLocP.get(this.refinedLocP.size()-1).latitude = newloc.latitude;
+			this.refinedLocP.get(this.refinedLocP.size()-1).longitude = newloc.longitude;
+			this.refinedLocP.get(this.refinedLocP.size()-1).time = newloc.time;
+			
+			if(this.uiHelper!=null) {
+				this.uiHelper.dispMsg("hot replaced");
+			}
+		}
+	}
+	
 	
 }
