@@ -77,6 +77,7 @@ public class UIRooms extends Activity {
           	    if(currentMenuState==1) {
           	    	if(roomList.get(position).id == -2) {
           	    		createForm.setVisibility(0);
+          	    		inpCreateName.setText("Id"+uiHelperRef.getStOwnUserId()+"'s room");
           	    	} else {
           	    		joinRoom(position);
           	    	}
@@ -135,7 +136,7 @@ public class UIRooms extends Activity {
 	
 	public void createRoom() {
 		String roomName = inpCreateName.getText().toString();
-		this.clientComm.createRoom(roomName);
+		this.clientComm.createRoom(this.uiHelperRef.getStOwnUserId(), roomName);
 	}
 
 }

@@ -9,7 +9,7 @@
         <Button android:text="Refresh Rooms" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:id="@+id/btn_rmrefresh" android:layout_height="wrap_content" android:layout_marginRight="6px"></Button>
     </RelativeLayout>
     <LinearLayout android:layout_width="fill_parent" android:id="@+id/createForm" android:layout_height="wrap_content">
-        <EditText android:layout_height="wrap_content" android:text="EditText" android:id="@+id/inp_roomname" android:layout_width="210dip" android:layout_marginLeft="6px"></EditText>
+        <EditText android:layout_height="wrap_content" android:text="New Room" android:id="@+id/inp_roomname" android:layout_width="210dip" android:layout_marginLeft="6px"></EditText>
         <Button android:layout_height="wrap_content" android:text="Create" android:layout_width="wrap_content" android:id="@+id/btn_createRoom"></Button>
     </LinearLayout>
         
