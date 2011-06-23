@@ -17,10 +17,11 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.google.android.maps.Projection;
+import com.icepack.MeetUp1.common.MULocation;
 
 public class MapsOverlayDraw extends Overlay {
 
-	public ArrayList<GeoPoint> locGeoPoints = new ArrayList<GeoPoint>();
+	public ArrayList<MULocation> MULocPoints = new ArrayList<MULocation>();
 	private ArrayList<Point> locPoints = new ArrayList<Point>();
 	private Paint dPaint1;
 	private Path dPath1;
@@ -33,7 +34,7 @@ public class MapsOverlayDraw extends Overlay {
 	//private ArrayList<MapsOverlayItem> mapOverlayItems = new ArrayList<MapsOverlayItem>();
 	private MapsOverlayItem mapOverlayItems;
 	private OverlayItem ovIGeoLoc;
-	public Location geoLoc;
+	public MULocation geoLoc;
 	private GeoPoint geoLocPoint;
 	
 	private Drawable itemDrawable;
@@ -87,7 +88,7 @@ public class MapsOverlayDraw extends Overlay {
 	
 	public void updateLocPoints()
 	{
-		int itemcount = locGeoPoints.size();
+		int itemcount = MULocPoints.size();
 		
 		this.mapProjection = mapView.getProjection();
 		
@@ -95,7 +96,8 @@ public class MapsOverlayDraw extends Overlay {
 		
 		for (int i=0; i<itemcount; i++)
 		{
-			mapProjection.toPixels(locGeoPoints.get(i), tmpPoint);
+			GeoPoint newGeoPoint = new GeoPoint((int)(MULocPoints.get(i).latitude*1000000), (int)(MULocPoints.get(i).longitude*1000000));
+			mapProjection.toPixels(newGeoPoint, tmpPoint); // sets tmpPoint to GeoPoint Coordinates
 			locPoints.add(new Point(tmpPoint));
 		}
 		
@@ -146,7 +148,7 @@ public class MapsOverlayDraw extends Overlay {
 	{
 		if(geoLoc!=null)
 		{
-			geoLocPoint = new GeoPoint((int)(this.geoLoc.getLatitude()*1000000), (int)(this.geoLoc.getLongitude()*1000000));
+			geoLocPoint = new GeoPoint((int)(this.geoLoc.latitude*1000000), (int)(this.geoLoc.latitude*1000000));
 		}
 	}
 	

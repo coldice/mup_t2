@@ -54,7 +54,7 @@ public class UIMaps extends MapActivity {
         mapOvItemMgr = new MapsOverlayItemMgr();
         
         locTracker = new ULocTracker();
-        mapsOverlays.locGeoPoints = locTracker.refinedLocGP;
+        mapsOverlays.MULocPoints = locTracker.refinedLocP;
 //        mapsOverlays.geoLoc = locTracker.currentLoc;
 //        mapsOverlays.setItemDrawable(this.getResources().getDrawable(R.drawable.mark1));
         mapOvItemMgr.tfunc1(this.getResources().getDrawable(R.drawable.mark1), (MapView)this.findViewById(R.id.mapview1), locTracker.geoLocPoint);
@@ -116,7 +116,7 @@ public class UIMaps extends MapActivity {
 				int selProg = rangeSel.getProgress();
 				//uiHelper.dispMsg("set minimum Point Distance:"+selProg);
 				locTracker.minPointDistance = selProg;
-				uiHelper.setSecMsg("|pc:"+locTracker.refinedLocGP.size()+" |minD:"+(int)locTracker.minPointDistance+" |lastD:"+(int)locTracker.lastPointDistance+"  ");
+				uiHelper.setSecMsg("|pc:"+locTracker.refinedLocP.size()+" |minD:"+(int)locTracker.minPointDistance+" |lastD:"+(int)locTracker.lastPointDistance+"  ");
 			}
 		};
         
