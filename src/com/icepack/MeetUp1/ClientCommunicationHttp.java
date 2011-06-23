@@ -177,7 +177,7 @@ public class ClientCommunicationHttp {
 			ArrayList<MULocation> locs = new ArrayList<MULocation>();
 			for(int i=0; i< jLocs.length(); i++) {
 				JSONObject loc = jLocs.getJSONObject(i);
-				locs.add(new MULocation(loc.getDouble("lat"),loc.getDouble("long"), loc.getLong("time")));
+				locs.add(new MULocation(loc.getInt("id"),loc.getDouble("lat"),loc.getDouble("long"), loc.getLong("time")));
 			}
 			return locs;
 		} catch (Exception e) {
