@@ -219,7 +219,7 @@ public class ClientCommunicationHttp {
 			ArrayList<MUUser> users = new ArrayList<MUUser>();
 			for(int i=0; i< jUsers.length(); i++) {
 				JSONObject jUser = jUsers.getJSONObject(i);
-				users.add(new MUUser(jUser.getInt("id"),jUser.getString("name")));
+				users.add(new MUUser(jUser.getInt("userid"),jUser.getString("name")));
 			}
 			return users;
 		} catch (Exception e) {
