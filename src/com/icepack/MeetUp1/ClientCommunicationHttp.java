@@ -179,6 +179,7 @@ public class ClientCommunicationHttp {
 				JSONObject loc = jLocs.getJSONObject(i);
 				locs.add(new MULocation(loc.getInt("id"),loc.getDouble("lat"),loc.getDouble("long"), loc.getLong("time")));
 			}
+			
 			return locs;
 		} catch (Exception e) {
 			e.printStackTrace();
