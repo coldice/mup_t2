@@ -79,6 +79,7 @@ public class UIMaps extends MapActivity {
         //netref
         netLocMgr = new UIMapsNetLocMgr(locTrackerList, clientComm, mMapView);
         netLocMgr.uiHelperRef = this.uiHelper; //to be wrapped in constructer/method
+        
         mapOverlays.add(mapsOverlays);
         
         

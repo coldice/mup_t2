@@ -9,11 +9,11 @@ import com.icepack.MeetUp1.common.MUUser;
 public class UIMapsNetLocMgr {
 	public ArrayList<ULocTracker> locTrackerList;
 	public ArrayList<MapsOverlayDraw> mapNetOverlays;
-	ClientCommunicationHttp clientComm;
+	public ClientCommunicationHttp clientComm;
 	MapView refMapView;
 	public UIHelper uiHelperRef;
 	
-	public UIMapsNetLocMgr(ArrayList<ULocTracker> locTrackerList, ClientCommunicationHttp clientCommt, MapView refMapView)
+	public UIMapsNetLocMgr(ArrayList<ULocTracker> locTrackerList, ClientCommunicationHttp clientComm, MapView refMapView)
 	{
 		this.locTrackerList = locTrackerList;
 		this.clientComm = clientComm;
@@ -40,8 +40,11 @@ public class UIMapsNetLocMgr {
 		//locTrackerList.get(i);
 		
 		for(ULocTracker uLocTracker : locTrackerList) {
-			//ArrayList<MULocation> newLocs = clientComm.getLocation(uLocTracker.locUser.id, uLocTracker.lastLocId);
-			ArrayList<MULocation> newLocs = clientComm.getLocation(2, 1);
+				
+			ArrayList<MULocation> newLocs = new ArrayList<MULocation>();
+			if(this.clientComm!=null) {
+				newLocs = clientComm.getLocation(uLocTracker.locUser.id, uLocTracker.lastLocId);
+			}
 			
 			for(MULocation newLocPoint: newLocs) {
 				uLocTracker.refinedLocP.add(newLocPoint);
