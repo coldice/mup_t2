@@ -58,7 +58,7 @@ public class UIRooms extends Activity {
           	    String pname = (String) obj;
           	    
           	    if(currentMenuState==1) {
-          	    	showRoomListMessage(" : joining "+pname+"..");
+          	    	joinRoom(position);
           	    }
               }
           });
@@ -108,6 +108,7 @@ public class UIRooms extends Activity {
 	
 	public void joinRoom(int roomId) {
 		this.clientComm.LogInToRoom(this.uiHelperRef.getStOwnUserId(), roomId);
+		this.showRoomListMessage("joining Room: "+roomId);
 	}
 
 }
