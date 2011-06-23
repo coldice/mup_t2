@@ -3,11 +3,14 @@ package com.icepack.MeetUp1;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.icepack.MeetUp1.common.MURoom;
@@ -15,11 +18,15 @@ import com.icepack.MeetUp1.common.MURoom;
 public class UIRooms extends Activity {
 	ListView roomListView;
 	Button btnRefreshList;
+	Button btnCreateRoom;
 	String roomdata_arr[];
 	ArrayList<MURoom> roomList;
 	int currentMenuState;
 	ClientCommunicationHttp clientComm;
 	UIHelper uiHelperRef;
+	
+	EditText inpCreateName;
+	LinearLayout createForm;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +34,17 @@ public class UIRooms extends Activity {
         setContentView(R.layout.tvrooms);
         roomListView = (ListView)findViewById(R.id.lsv_roomlist);
         btnRefreshList = (Button)findViewById(R.id.btn_rmrefresh);
+        btnCreateRoom = (Button)(Button)findViewById(R.id.btn_createRoom);
+        inpCreateName = (EditText)findViewById(R.id.inp_roomname);
+        
+        createForm = (LinearLayout)findViewById(R.id.createForm);
+        createForm.setVisibility(8);
         
         roomdata_arr = new String[1];
         roomdata_arr[0] = "loading...";
         roomList = new ArrayList<MURoom>();
         currentMenuState = 1;
+        
         //ad
         //roomListView.setAdapter(adapter)
         //roomListView.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, COUNTRIES));
@@ -46,6 +59,12 @@ public class UIRooms extends Activity {
             }
         });
         
+        btnCreateRoom.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	createRoom();
+            }
+        });
+        
         roomListView.setClickable(true);
         roomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -56,7 +75,11 @@ public class UIRooms extends Activity {
           	    String pname = (String) obj;
           	    
           	    if(currentMenuState==1) {
-          	    	joinRoom(position);
+          	    	if(roomList.get(position).id == -2) {
+          	    		createForm.setVisibility(0);
+          	    	} else {
+          	    		joinRoom(position);
+          	    	}
           	    }
               }
           });
@@ -73,10 +96,10 @@ public class UIRooms extends Activity {
 	}
 	
 	public void updateRoomList() {
+		createForm.setVisibility(8);
+		
 		//refresh the roomlist
 		roomList.clear();
-		
-		roomList.add(new MURoom(-2, "neuen Raum erstellen"));
 		
 		//server call
 		if(this.clientComm!=null)
@@ -84,6 +107,7 @@ public class UIRooms extends Activity {
 			this.roomList = clientComm.getRoomList();
 		}
 		
+		roomList.add(0, new MURoom(-2, "neuen Raum erstellen"));
 		
 		//set up ui list
 		int roomCount = roomList.size();
@@ -107,6 +131,10 @@ public class UIRooms extends Activity {
 	public void joinRoom(int roomId) {
 		this.clientComm.LogInToRoom(this.uiHelperRef.getStOwnUserId(), roomId);
 		this.showRoomListMessage("joining Room: "+roomId);
+	}
+	
+	public void createRoom() {
+		//this.clientComm.genRoom();
 	}
 
 }

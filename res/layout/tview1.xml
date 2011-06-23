@@ -14,7 +14,8 @@
      </ScrollView>
      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TextView" android:id="@+id/statText2"></TextView>
      <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/linearLayout2">
-         <Button android:layout_height="wrap_content" android:text="Refresh" android:layout_width="wrap_content" android:id="@+id/btnRelUser"></Button>
+         <Button android:layout_height="wrap_content" android:text="Rld List" android:layout_width="wrap_content" android:id="@+id/btnRelUserList"></Button>
+         <Button android:layout_height="wrap_content" android:text="Refresh" android:layout_width="wrap_content" android:id="@+id/btnRelUserLoc"></Button>
          <SeekBar android:id="@+id/rangeSel1" android:layout_height="wrap_content" android:layout_width="fill_parent"></SeekBar>
      </LinearLayout>
         <com.google.android.maps.MapView

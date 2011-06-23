@@ -37,8 +37,10 @@ public class UIMaps extends MapActivity {
     MapsOverlayDraw mapsOverlays;
     MapsOverlayItemMgr mapOvItemMgr;
     
+    ArrayList<MUUser> userList;
     
     Button btnRelUList;
+    Button btnRelULoc;
     public UIHelper uiHelper;
     
     
@@ -62,6 +64,8 @@ public class UIMaps extends MapActivity {
         locTrackerList = new ArrayList<ULocTracker>();
         OwnLocTracker = new ULocTracker();
         
+        userList = new ArrayList<MUUser>();
+        
         mapsOverlays.MULocPoints = OwnLocTracker.refinedLocP;
 
         mapOvItemMgr.tfunc1(this.getResources().getDrawable(R.drawable.mark1), (MapView)this.findViewById(R.id.mapview1), OwnLocTracker.geoLocPoint);
@@ -78,8 +82,8 @@ public class UIMaps extends MapActivity {
         mapOverlays.add(mapsOverlays);
         
         
-        btnRelUList = (Button)findViewById(R.id.btnRelUser);
-        
+        btnRelUList = (Button)findViewById(R.id.btnRelUserList);
+        btnRelULoc = (Button)findViewById(R.id.btnRelUserLoc);
         
         
         // ******************
@@ -115,6 +119,14 @@ public class UIMaps extends MapActivity {
 
       //OnClick Listeners
         btnRelUList.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	updateUserDataList();
+            	
+            	
+            }
+        });
+        
+        btnRelULoc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	updateUserData();
             	
@@ -162,9 +174,7 @@ public class UIMaps extends MapActivity {
 	
 	public void updateUserData()
 	{
-		ArrayList<MUUser> userList = clientComm.getUserList(this.uiHelper.getStOwnUserId());
 		
-		this.uiHelper.dispMsg("got userlist with"+userList.size()+" items");
 		//do more
 		
 		//update list
@@ -175,6 +185,14 @@ public class UIMaps extends MapActivity {
 		}
 		
 		this.netLocMgr.updateUserLoc();
+	}
+	
+	public void updateUserDataList() {
+		ArrayList<MUUser> tmpUserList = clientComm.getUserList(this.uiHelper.getStOwnUserId());
+		
+		this.uiHelper.dispMsg("got userlist with"+tmpUserList.size()+" items");
+		
+		userList = tmpUserList;
 	}
 
 }
