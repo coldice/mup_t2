@@ -29,6 +29,7 @@ public class UIMaps extends MapActivity {
     GeoPoint tmpPoint;
     
     UIMapsNetLocMgr netLocMgr;
+    ClientCommunicationHttp clientComm;
     
     MapsOverlayDraw mapsOverlays;
     MapsOverlayItemMgr mapOvItemMgr;
@@ -63,6 +64,8 @@ public class UIMaps extends MapActivity {
 
        ((MeetUp1Activity)getParent()).tabCallback1(this);
         OwnLocTracker.uiHelper = this.uiHelper; //pass down ref
+        
+        clientComm = new ClientCommunicationHttp(this.uiHelper.getStServerIp(), 23232);
         
         //netref
         netLocMgr = new UIMapsNetLocMgr(locTrackerList);
@@ -126,7 +129,7 @@ public class UIMaps extends MapActivity {
 		
 		//Update Online data
 		MULocation newMULoc = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime());
-		
+		clientComm.setLocation(this.uiHelper.getStOwnUserId(), newMULoc);
 	}
 	
 	public void updateMapViewSet()
