@@ -42,8 +42,10 @@ public class ULocTracker {
 		
 		if(refinedLocP.size()>=1)
 		{
-			Location.distanceBetween(currentLoc.latitude, currentLoc.longitude, currentLoc.latitude, currentLoc.longitude, lastPointDistanceData);
-			lastPointDistance = lastPointDistanceData[0];
+			Location.distanceBetween(currentLoc.latitude, currentLoc.longitude, refinedLocP.get(refinedLocP.size()-1).latitude, refinedLocP.get(refinedLocP.size()-1).longitude, lastPointDistanceData);
+			lastPointDistance = lastPointDistanceData[1];
+			dispatchMessage("dst1:"+lastPointDistanceData[0]+" dst2:"+lastPointDistanceData[1], 1);
+			
 		}
 		
 		if(lastSavedLoc == null)
@@ -55,6 +57,7 @@ public class ULocTracker {
 		else if(lastPointDistance > minPointDistance)
 		{
 			//GeoPoint newPoint = new GeoPoint((int)(currentLoc.getLatitude()*1E6), (int)(currentLoc.getLongitude()*1E6));
+			
 			refinedLocP.add(currentLoc);
 			lastSavedLoc = currentLoc;
 			

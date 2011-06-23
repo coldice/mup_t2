@@ -38,49 +38,33 @@ public class MeetUp1Activity extends TabActivity {
 
         //LayoutInflater.from(this).inflate(R.layout.main, tabHost.getTabContentView(), true);
 
-        // ************ sub class setup
+        /* ************ sub class setup
+         * 1: Room Tab 2: Track Tab 3: Settings Tab
+         */
         
-        
-        
-        /*
-        wv = getLayoutInflater().inflate(R.layout.user_tab, mTabHost.getTabContentView(), false);
-        mTabHost.getTabContentView().addView(wv);
-        mTabHost.addTab(mTabHost.newTabSpec("User").setIndicator("User").setContent(wv.getId()));
-		*/
+        //+ Room Tab
+     	//- set up class as intent
+        intent = new Intent().setClass(this, UIRooms.class);
 
-        // Create an Intent to launch an Activity for the tab (to be reused)
-        intent = new Intent().setClass(this, dummyClass1.class);
-
-        // Initialize a TabSpec for each tab and add it to the TabHost
-        spec = tabHost.newTabSpec("tab1").setIndicator("tab1",
-                          res.getDrawable(R.drawable.ic_tab_artists))
-                      .setContent(intent);
+        //- create Tabhost spec
+        spec = tabHost.newTabSpec("roomTab").setIndicator("rooms", res.getDrawable(R.drawable.ic_tab_artists)).setContent(intent);
         tabHost.addTab(spec);
 
-        /*
-        View wv = getLayoutInflater().inflate(R.layout.tview1, tabHost.getTabContentView(), false);
-        tabHost.getTabContentView().addView(wv);
-        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("tab2").setContent(wv.getId()));
-        
-        */
-        // Do the same for the other tabs
-        //intent = new Intent().setClass(this, dummyClass1.class);
-/*        spec = tabHost.newTabSpec("albums").setIndicator("tab2",
-                          res.getDrawable(R.drawable.ic_tab_artists))
-                      .setContent(intent);*/
-        /*
-        spec = tabHost.newTabSpec("tab2").setIndicator("tab2", res.getDrawable(R.drawable.ic_tab_artists)).setContent(R.id.tview1);
-        tabHost.addTab(spec);
-        */
-
+        //+ Track Tab
         intent = new Intent().setClass(this, UIMaps.class);
 
-        spec = tabHost.newTabSpec("trackTab").setIndicator("track",
-                          res.getDrawable(R.drawable.ic_tab_artists))
-                      .setContent(intent);
+        spec = tabHost.newTabSpec("trackTab").setIndicator("track",res.getDrawable(R.drawable.ic_tab_artists)).setContent(intent);
         tabHost.addTab(spec);
         
+     	//+ Settings Tab
+        intent = new Intent().setClass(this, UISettings.class);
+
+        spec = tabHost.newTabSpec("settingsTab").setIndicator("settings",res.getDrawable(R.drawable.ic_tab_artists)).setContent(intent);
+        tabHost.addTab(spec);
         
+        tabHost.getTabWidget().getChildAt(0).getLayoutParams().height = 75;
+        tabHost.getTabWidget().getChildAt(1).getLayoutParams().height = 75;
+        tabHost.getTabWidget().getChildAt(2).getLayoutParams().height = 75;
         
         /*
 
