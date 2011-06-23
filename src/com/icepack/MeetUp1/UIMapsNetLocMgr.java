@@ -2,6 +2,9 @@ package com.icepack.MeetUp1;
 
 import java.util.ArrayList;
 
+import android.graphics.drawable.Drawable;
+
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.icepack.MeetUp1.common.MULocation;
 import com.icepack.MeetUp1.common.MUUser;
@@ -9,9 +12,11 @@ import com.icepack.MeetUp1.common.MUUser;
 public class UIMapsNetLocMgr {
 	public ArrayList<ULocTracker> locTrackerList;
 	public ArrayList<MapsOverlayDraw> mapNetOverlays;
+	public ArrayList<MapsOverlayItemMgr> mapOvItemMgrArr;
 	public ClientCommunicationHttp clientComm;
 	MapView refMapView;
 	public UIHelper uiHelperRef;
+	public Drawable fLocDrawable;
 	
 	public UIMapsNetLocMgr(ArrayList<ULocTracker> locTrackerList, ClientCommunicationHttp clientComm, MapView refMapView)
 	{
@@ -30,6 +35,10 @@ public class UIMapsNetLocMgr {
 		mapNetOverlays.add(newDraw);
 		this.locTrackerList.add(newTracker);
 		this.refMapView.getOverlays().add(mapNetOverlays.get(mapNetOverlays.size()-1));
+		
+		MapsOverlayItemMgr newImgr = new MapsOverlayItemMgr();
+		newImgr.tfunc1(fLocDrawable, refMapView, newTracker.geoLocPoint);
+		mapOvItemMgrArr.add(newImgr);
 		newDraw.sel_col = user.id;
 	}
 	
@@ -40,19 +49,24 @@ public class UIMapsNetLocMgr {
 	public void updateUserLoc() {
 		//locTrackerList.get(i);
 		
-		for(ULocTracker uLocTracker : locTrackerList) {
-				
+		int icount = locTrackerList.size();
+		//for(ULocTracker uLocTracker : locTrackerList) {
+		for(int i=0;i<icount;i++) {
+			
 			ArrayList<MULocation> newLocs = new ArrayList<MULocation>();
 			if(this.clientComm!=null) {
-				newLocs = clientComm.getLocation(uLocTracker.locUser.id, uLocTracker.lastLocId);
+				newLocs = clientComm.getLocation(locTrackerList.get(i).locUser.id, locTrackerList.get(i).lastLocId);
 			}
 			
 			for(MULocation newLocPoint: newLocs) {
-				uLocTracker.refinedLocP.add(newLocPoint);
+				locTrackerList.get(i).refinedLocP.add(newLocPoint);
 			}
+			MULocation tmpLoc = locTrackerList.get(i).getRefinedLocs().get(locTrackerList.get(i).getRefinedLocs().size()-1);
+			GeoPoint newPoint = new GeoPoint((int)(tmpLoc.latitude*100000), (int)(tmpLoc.longitude*100000));
+			this.mapOvItemMgrArr.get(i).updateGPoint(newPoint, refMapView);
 			
 			if(this.uiHelperRef != null) {
-				this.uiHelperRef.dispMsg("got "+newLocs.size()+" locs for uid: "+uLocTracker.locUser.id);
+				this.uiHelperRef.dispMsg("got "+newLocs.size()+" locs for uid: "+locTrackerList.get(i).locUser.id);
 			}
 		}
 	}

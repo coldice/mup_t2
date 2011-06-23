@@ -67,7 +67,7 @@ public class MapsOverlayDraw extends Overlay {
 
         dPaint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
         dPaint1.setDither(true);
-        dPaint1.setColor(Color.GREEN);
+        dPaint1.setColor(Color.MAGENTA);
         dPaint1.setStyle(Paint.Style.STROKE);
 
         dPaint1.setStrokeJoin(Paint.Join.ROUND);
@@ -86,7 +86,7 @@ public class MapsOverlayDraw extends Overlay {
         
         dPaint3 = new Paint(Paint.ANTI_ALIAS_FLAG);
         dPaint3.setDither(true);
-        dPaint3.setColor(Color.YELLOW);
+        dPaint3.setColor(Color.GREEN);
         dPaint3.setStyle(Paint.Style.STROKE);
 
         dPaint3.setStrokeJoin(Paint.Join.ROUND);
