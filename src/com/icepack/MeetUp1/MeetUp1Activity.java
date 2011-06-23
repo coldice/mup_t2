@@ -23,6 +23,7 @@ public class MeetUp1Activity extends TabActivity {
 	ULocTracker ownPosTracker; //not used
 	GPSMgr gpsMgr;
 	UIMaps uiMaps;
+	ClientCommunicationHttp clientComm;
 	
 	
     @Override
@@ -39,6 +40,13 @@ public class MeetUp1Activity extends TabActivity {
 
         //LayoutInflater.from(this).inflate(R.layout.main, tabHost.getTabContentView(), true);
 
+        // UI Helper Setup
+        uiHelper = new UIHelper();
+        this.uiHelper.setStOwnUserId(1);
+        this.uiHelper.setStServerIp("192.168.0.102");
+        
+        this.clientComm = new ClientCommunicationHttp(this.uiHelper.getStServerIp(), 23232);
+        
         /* ************ sub class setup
          * 1: Room Tab 2: Track Tab 3: Settings Tab
          */
@@ -96,7 +104,8 @@ public class MeetUp1Activity extends TabActivity {
     	TextView tv2 = (TextView)callClass.findViewById(R.id.statText2);
     	TextView tv3 = (TextView)callClass.findViewById(R.id.statText3);
     	
-        uiHelper = new UIHelper(tv1, tv2, tv3);
+        
+        uiHelper.setupUIHelperViews(tv1, tv2, tv3);
         uiHelper.clearMsg();
         uiHelper.dispMsg("loading system..");
         uiHelper.setSecMsg("waiting for GPS data");
@@ -104,9 +113,8 @@ public class MeetUp1Activity extends TabActivity {
         
         ownPosTracker = new ULocTracker();
         
-        this.uiHelper.setStOwnUserId(1);
-        this.uiHelper.setStServerIp("192.168.0.102");
         
+        callClass.clientComm = this.clientComm;
         gpsMgr = new GPSMgr();
     	callClass.uiHelper = this.uiHelper;
     	callClass.uiHelper.dispMsg("system loaded!");
@@ -117,6 +125,12 @@ public class MeetUp1Activity extends TabActivity {
     	
     	
     	//callClass.uiHelper.dispMsg("set mark");
+    }
+    
+    public void tabCallback2(UIRooms callClass)
+    {
+    	callClass.uiHelperRef = this.uiHelper;
+    	callClass.clientComm = this.clientComm;
     }
     
     public void gpsUpdateCallback(Location newLoc)

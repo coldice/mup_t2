@@ -6,6 +6,8 @@ import java.util.List;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -16,6 +18,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
 import com.icepack.MeetUp1.common.MULocation;
+import com.icepack.MeetUp1.common.MUUser;
 
 public class UIMaps extends MapActivity {
 
@@ -34,6 +37,8 @@ public class UIMaps extends MapActivity {
     MapsOverlayDraw mapsOverlays;
     MapsOverlayItemMgr mapOvItemMgr;
     
+    
+    Button btnRelUList;
     public UIHelper uiHelper;
     
     
@@ -65,14 +70,15 @@ public class UIMaps extends MapActivity {
        ((MeetUp1Activity)getParent()).tabCallback1(this);
         OwnLocTracker.uiHelper = this.uiHelper; //pass down ref
         
-        clientComm = new ClientCommunicationHttp(this.uiHelper.getStServerIp(), 23232);
+        //clientComm = new ClientCommunicationHttp(this.uiHelper.getStServerIp(), 23232);
         
         //netref
         netLocMgr = new UIMapsNetLocMgr(locTrackerList, clientComm, mMapView);
-        
+        netLocMgr.uiHelperRef = this.uiHelper; //to be wrapped in constructer/method
         mapOverlays.add(mapsOverlays);
         
         
+        btnRelUList = (Button)findViewById(R.id.btnRelUser);
         
         
         
@@ -107,6 +113,14 @@ public class UIMaps extends MapActivity {
         
         rangeSel.setOnSeekBarChangeListener(seekChangeListener);
 
+      //OnClick Listeners
+        btnRelUList.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	updateUserData();
+            	
+            	
+            }
+        });
         
 	}
 	@Override
@@ -138,6 +152,24 @@ public class UIMaps extends MapActivity {
 	public void updateMapViewSet()
 	{
 		//tmpPoint = new GeoPoint((int)locTracker.currentLoc.getLatitude()*1000000, (int)locTracker.currentLoc.getLongitude()*1000000);
+	}
+	
+	public void updateNetLocs()
+	{
+		netLocMgr.updateUserLoc();
+		
+	}
+	
+	public void updateUserData()
+	{
+		ArrayList<MUUser> userList = clientComm.getUserList(this.uiHelper.getStOwnUserId());
+		
+		this.uiHelper.dispMsg("got userlist with"+userList.size()+" items");
+		//do more
+		
+		//update list
+		
+		this.netLocMgr.updateUserLoc();
 	}
 
 }

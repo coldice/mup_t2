@@ -11,6 +11,7 @@ public class UIMapsNetLocMgr {
 	public ArrayList<MapsOverlayDraw> mapNetOverlays;
 	ClientCommunicationHttp clientComm;
 	MapView refMapView;
+	public UIHelper uiHelperRef;
 	
 	public UIMapsNetLocMgr(ArrayList<ULocTracker> locTrackerList, ClientCommunicationHttp clientCommt, MapView refMapView)
 	{
@@ -27,13 +28,14 @@ public class UIMapsNetLocMgr {
 		newDraw.MULocPoints = newTracker.refinedLocP;
 		mapNetOverlays.add(newDraw);
 		this.locTrackerList.add(newTracker);
+		this.refMapView.getOverlays().add(mapNetOverlays.get(mapNetOverlays.size()-1));
 	}
 	
 	public void cleanLocUser() {
 		//TODO: to be implemented
 	}
 	
-	public void updateUserLoc(int id) {
+	public void updateUserLoc() {
 		//locTrackerList.get(i);
 		
 		for(ULocTracker uLocTracker : locTrackerList) {
@@ -41,6 +43,11 @@ public class UIMapsNetLocMgr {
 			for(MULocation newLocPoint: newLocs) {
 				uLocTracker.refinedLocP.add(newLocPoint);
 			}
+			
+			if(this.uiHelperRef != null) {
+				this.uiHelperRef.dispMsg("got "+newLocs.size()+" locs for uid: "+uLocTracker.locUser.id);
+			}
 		}
 	}
+	
 }
