@@ -1,6 +1,9 @@
 package com.icepack.MeetUp1;
 
 
+
+
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -18,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.icepack.MeetUp1.common.MULocation;
+import com.icepack.MeetUp1.common.MUPException;
 import com.icepack.MeetUp1.common.MURoom;
 import com.icepack.MeetUp1.common.MUUser;
 
@@ -29,6 +33,8 @@ public class ClientCommunicationHttp {
 	private String host;
 	//private HttpClient httpclient;
 	private HttpClient httpclient;
+	int timeout = 10000;
+	int postcount;
 
 	/**
 	 * Creates ClientCommunicationHttp Object.
@@ -41,6 +47,8 @@ public class ClientCommunicationHttp {
 		this.host = host;
 		//httpclient = new DefaultHttpClient();
 		httpclient = new DefaultHttpClient();
+		httpclient.getParams().setParameter("http.socket.timeout", timeout);
+		System.out.println(httpclient.getParams().getParameter("http.socket.timeout"));
 	}
 
 	/**
@@ -53,14 +61,7 @@ public class ClientCommunicationHttp {
 	 * @throws JSONException
 	 *             on Message errors
 	 */
-	private JSONObject jPost(int type, JSONObject jObj) throws IOException,Exception, JSONException {
-		JSONObject jEntity = new JSONObject();
-		jEntity.put("type", type);
-		jEntity.put("body", jObj);
-		StringEntity entity = new StringEntity(jEntity.toString());
-
-		HttpPost httppost = new HttpPost("http://" + host + ":" + port);
-		httppost.setEntity(entity);
+	private JSONObject executePost(HttpPost httppost) throws IOException, JSONException, MUPException {
 		HttpResponse response = httpclient.execute(httppost);
 		HttpEntity resEntity = response.getEntity();
 		if (resEntity != null) {
@@ -68,50 +69,56 @@ public class ClientCommunicationHttp {
 			if (len != -1 && len < 4096) {
 				throw new IOException("Response out of Bound"); // Why exactly?
 			} else {
-				InputStream is = resEntity.getContent();
+				InputStream ubs = resEntity.getContent();
+				BufferedInputStream is = new BufferedInputStream(ubs,4096);
 				ByteBuffer length = ByteBuffer.allocate(Integer.SIZE / 8);
 				is.read(length.array());
-				ByteBuffer message = ByteBuffer.allocate(length.getInt());
+				int ilength = length.getInt();
+				System.out.println("Message Length is: "+ilength);
+				ByteBuffer message = ByteBuffer.allocate(ilength);
 				is.read(message.array());
-				JSONObject jRes = new JSONObject(new String(message.array()));
 				is.close();
+				String JString = new String(message.array()).trim();
+				//Check if Message Failed
+				if(JString.length() != ilength && postcount < 20) {
+					postcount++;
+					return executePost(httppost);
+				}
+				
+				System.out.println("JStringlength;"+JString.length());
+				JSONObject jRes = new JSONObject(JString);
 				if (jRes.getInt("type") == ComConstants.ERROR) {
-					throw new Exception("Error on Server");
+					throw new MUPException("Error on Server");
 				} else
 					return jRes.getJSONObject("body");
 			}
 		} else
 			throw new IOException("No Response");
 	}
+	
+	private JSONObject post(HttpEntity entity) throws IOException, JSONException, MUPException {
+		HttpPost httppost = new HttpPost("http://" + host + ":" + port);
+		httppost.getParams().setParameter("http.socket.timeout", timeout);
+		httppost.getParams().setParameter("http.connection.timeout", timeout);
+		httppost.setEntity(entity);
+		System.out.println("Timeout:"+httppost.getParams().getParameter("http.socket.timeout"));
+		postcount = 0;
+		return executePost(httppost);
+	}
+	private JSONObject jPost(int type, JSONObject jObj) throws IOException,MUPException, JSONException {
+		JSONObject jEntity = new JSONObject();
+		jEntity.put("type", type);
+		jEntity.put("body", jObj);
+		StringEntity entity = new StringEntity(jEntity.toString());
+		return post(entity);
+		
+	}
 	private JSONObject jPost(int type) throws IOException,Exception, JSONException {
 		JSONObject jEntity = new JSONObject();
 		jEntity.put("type", type);
 		jEntity.put("body", new JSONObject());
 		StringEntity entity = new StringEntity(jEntity.toString());
-
-		HttpPost httppost = new HttpPost("http://" + host + ":" + port);
-		httppost.setEntity(entity);
-		HttpResponse response = httpclient.execute(httppost);
-		HttpEntity resEntity = response.getEntity();
-		if (resEntity != null) {
-			long len = resEntity.getContentLength();
-			if (len != -1 && len < 4096) {
-				throw new IOException("Response out of Bound"); // Why exactly?
-			} else {
-				InputStream is = resEntity.getContent();
-				ByteBuffer length = ByteBuffer.allocate(Integer.SIZE / 8);
-				is.read(length.array());
-				ByteBuffer message = ByteBuffer.allocate(length.getInt());
-				is.read(message.array());
-				JSONObject jRes = new JSONObject(new String(message.array()));
-				is.close();
-				if (jRes.getInt("type") == ComConstants.ERROR) {
-					throw new Exception("Error on Server");
-				} else
-					return jRes.getJSONObject("body");
-			}
-		} else
-			throw new IOException("No Response");
+		return post(entity);
 	}
 	
 	/**

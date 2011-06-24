@@ -43,7 +43,7 @@ public class MeetUp1Activity extends TabActivity {
         // UI Helper Setup
         uiHelper = new UIHelper();
         this.uiHelper.setStOwnUserId(2); //DEBUG CONFIG
-        this.uiHelper.setStServerIp("192.168.0.102"); //DEBUG CONFIG
+        this.uiHelper.setStServerIp("31.18.21.44"); //DEBUG CONFIG
         
         this.clientComm = new ClientCommunicationHttp(this.uiHelper.getStServerIp(), 23232);
         
