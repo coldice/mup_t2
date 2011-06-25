@@ -72,32 +72,30 @@ public class ClientCommunicationHttp {
 				throw new IOException("Response out of Bound"); // Why exactly?
 			} else {
 				InputStream ubs = resEntity.getContent();
-				//BufferedInputStream is = new BufferedInputStream(ubs,4096);
-				BufferedReader is = new BufferedReader(new InputStreamReader(
-	                   ubs, "ISO-8859-1"), 2);
-				//ByteBuffer length = ByteBuffer.allocate(Integer.SIZE / 8);
-				//is.read(length.array());
+				BufferedInputStream is = new BufferedInputStream(ubs,4096);
+				ByteBuffer length = ByteBuffer.allocate(Integer.SIZE / 8);
+				is.read(length.array());
 				
-				char[]  length = new char[Integer.SIZE / 8];
-				is.read(length, 0, Integer.SIZE/8);
-				String sLength = new String(length);
-				int iLength = new Integer(sLength);
-				System.out.println("Message Length is: "+iLength);
-				//ByteBuffer message = ByteBuffer.allocate(iLength);
-				char[]  message = new char[iLength];
-				//is.read(message.array());
-				is.read(message,4,iLength);
+				int iLength = new Integer(length.getInt());
+				ByteBuffer message = ByteBuffer.allocate(iLength);
+				String JString = "";
+				while(is.read(message.array()) != -1) {	
+					JString += new String(message.array()).trim();
+					message = ByteBuffer.allocate(128);
+				}
+
 				is.close();
 				ubs.close();
-				//String JString = new String(message.array()).trim();
-				String JString = new String(message).trim();
+
 				//Check if Message Failed
-				if(JString.length() != iLength && postcount < 20) {
+				if(JString.length() != iLength && postcount < 10) {
 					postcount++;
 					return executePost(httppost);
 				}
-				
-				System.out.println("JStringlength;"+JString.length());
+				if(postcount >= 10) {
+					throw new MUException("Critical Post Attempts!");
+				}
+				System.out.println("Connection attempts: "+(postcount+1));
 				JSONObject jRes = new JSONObject(JString);
 				if (jRes.getInt("type") == ComConstants.ERROR) {
 					throw new MUException("Error on Server");
@@ -134,6 +132,17 @@ public class ClientCommunicationHttp {
 		return post(entity);
 	}
 	
+	public boolean test() {
+		try {
+			JSONObject jObj = new JSONObject();
+			jPost(ComConstants.TEST, jObj);
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 	/**
 	 * Handles setBudget message and set the budget of given month
 	 * 

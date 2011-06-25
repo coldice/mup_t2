@@ -19,4 +19,7 @@ public class ComConstants {
 	public static final byte LOC_SET = 10;
 	public static final byte ERROR = 7;
 	public static final byte NOERROR = 8;
+	
+	//Debug
+	public static final byte TEST = 101;
 }

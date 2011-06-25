@@ -17,6 +17,8 @@ public class UISettings extends Activity {
 	EditText tVal1;
 	EditText tVal2;
 	
+	Button test;
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
@@ -26,7 +28,15 @@ public class UISettings extends Activity {
         btnSave = (Button)findViewById(R.id.btnsaveset);
         tVal1 = (EditText)findViewById(R.id.inp_val1);
         tVal2 = (EditText)findViewById(R.id.inp_val2);
-        
+        test = (Button)findViewById(R.id.test);
+        test.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	if(clientComm!=null)
+        		{
+            		clientComm.test();
+        		}
+            }
+        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	saveSettings();
