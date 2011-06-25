@@ -4,11 +4,11 @@ package com.icepack.MeetUp1.common;
  * Serverside Error Exception
  */
 @SuppressWarnings("serial")
-public class MUPException extends Exception {
+public class MUException extends Exception {
 	/**
 	 * creates exception
 	 */
-	public MUPException() {
+	public MUException() {
 	}
 
 	/**
@@ -17,7 +17,7 @@ public class MUPException extends Exception {
 	 * @param message
 	 *            Error Message
 	 */
-	public MUPException(String message) {
+	public MUException(String message) {
 		super(message);
 	}
 }

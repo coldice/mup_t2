@@ -4,8 +4,10 @@ package com.icepack.MeetUp1;
 
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -21,7 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.icepack.MeetUp1.common.MULocation;
-import com.icepack.MeetUp1.common.MUPException;
+import com.icepack.MeetUp1.common.MUException;
 import com.icepack.MeetUp1.common.MURoom;
 import com.icepack.MeetUp1.common.MUUser;
 
@@ -42,7 +44,7 @@ public class ClientCommunicationHttp {
 	 * @throws Exception
 	 *             on Communication IO errors
 	 */
-	public ClientCommunicationHttp(String host, int port) {
+	public  ClientCommunicationHttp(String host, int port) {
 		this.port = port;
 		this.host = host;
 		//httpclient = new DefaultHttpClient();
@@ -61,7 +63,7 @@ public class ClientCommunicationHttp {
 	 * @throws JSONException
 	 *             on Message errors
 	 */
-	private JSONObject executePost(HttpPost httppost) throws IOException, JSONException, MUPException {
+	private JSONObject executePost(HttpPost httppost) throws IOException, JSONException, MUException {
 		HttpResponse response = httpclient.execute(httppost);
 		HttpEntity resEntity = response.getEntity();
 		if (resEntity != null) {
@@ -70,17 +72,27 @@ public class ClientCommunicationHttp {
 				throw new IOException("Response out of Bound"); // Why exactly?
 			} else {
 				InputStream ubs = resEntity.getContent();
-				BufferedInputStream is = new BufferedInputStream(ubs,4096);
-				ByteBuffer length = ByteBuffer.allocate(Integer.SIZE / 8);
-				is.read(length.array());
-				int ilength = length.getInt();
-				System.out.println("Message Length is: "+ilength);
-				ByteBuffer message = ByteBuffer.allocate(ilength);
-				is.read(message.array());
+				//BufferedInputStream is = new BufferedInputStream(ubs,4096);
+				BufferedReader is = new BufferedReader(new InputStreamReader(
+	                   ubs, "ISO-8859-1"), 2);
+				//ByteBuffer length = ByteBuffer.allocate(Integer.SIZE / 8);
+				//is.read(length.array());
+				
+				char[]  length = new char[Integer.SIZE / 8];
+				is.read(length, 0, Integer.SIZE/8);
+				String sLength = new String(length);
+				int iLength = new Integer(sLength);
+				System.out.println("Message Length is: "+iLength);
+				//ByteBuffer message = ByteBuffer.allocate(iLength);
+				char[]  message = new char[iLength];
+				//is.read(message.array());
+				is.read(message,4,iLength);
 				is.close();
-				String JString = new String(message.array()).trim();
+				ubs.close();
+				//String JString = new String(message.array()).trim();
+				String JString = new String(message).trim();
 				//Check if Message Failed
-				if(JString.length() != ilength && postcount < 20) {
+				if(JString.length() != iLength && postcount < 20) {
 					postcount++;
 					return executePost(httppost);
 				}
@@ -88,7 +100,7 @@ public class ClientCommunicationHttp {
 				System.out.println("JStringlength;"+JString.length());
 				JSONObject jRes = new JSONObject(JString);
 				if (jRes.getInt("type") == ComConstants.ERROR) {
-					throw new MUPException("Error on Server");
+					throw new MUException("Error on Server");
 				} else
 					return jRes.getJSONObject("body");
 			}
@@ -96,16 +108,17 @@ public class ClientCommunicationHttp {
 			throw new IOException("No Response");
 	}
 	
-	private JSONObject post(HttpEntity entity) throws IOException, JSONException, MUPException {
+	private JSONObject post(HttpEntity entity) throws IOException, JSONException, MUException {
 		HttpPost httppost = new HttpPost("http://" + host + ":" + port);
 		httppost.getParams().setParameter("http.socket.timeout", timeout);
 		httppost.getParams().setParameter("http.connection.timeout", timeout);
+		httppost.getParams().setParameter("http.protocol.content-charset", "ISO-8859-1");
 		httppost.setEntity(entity);
 		System.out.println("Timeout:"+httppost.getParams().getParameter("http.socket.timeout"));
 		postcount = 0;
 		return executePost(httppost);
 	}
-	private JSONObject jPost(int type, JSONObject jObj) throws IOException,MUPException, JSONException {
+	private JSONObject jPost(int type, JSONObject jObj) throws IOException,MUException, JSONException {
 		JSONObject jEntity = new JSONObject();
 		jEntity.put("type", type);
 		jEntity.put("body", jObj);
