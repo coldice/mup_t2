@@ -13,9 +13,10 @@
         <Button android:layout_height="wrap_content" android:text="Create" android:layout_width="wrap_content" android:id="@+id/btn_createRoom"></Button>
     </LinearLayout>
         
-    <HorizontalScrollView android:id="@+id/horizontalScrollView1" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="fill_parent" android:orientation="horizontal">
-        	<ListView android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/lsv_roomlist"></ListView>
+    <ScrollView android:id="@+id/ScrollView1" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="50dip" android:id="@+id/linearLayout1">
+        <ListView android:layout_width="fill_parent" android:id="@+id/lsv_roomlist" android:layout_height="250dip"></ListView>
+                
         </LinearLayout>
-    </HorizontalScrollView>
+    </ScrollView>
 </LinearLayout>
