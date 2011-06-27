@@ -2,6 +2,8 @@ package com.icepack.MeetUp1;
 
 import android.widget.TextView;
 
+import com.icepack.MeetUp1.common.MUUser;
+
 public class UIHelper {
 	TextView txtStatus;
 	TextView txtStatus2;
@@ -13,6 +15,10 @@ public class UIHelper {
 	//internal options
 	private int ST_own_userid;
 	private String ST_server;
+	
+	//ADDED! (temp)
+	private MUUser user;
+
 	
 	//set through
 	public int resetUserListFlag = 0;
@@ -41,7 +47,6 @@ public class UIHelper {
 		txtStatus.setText(message+"\n"+txtStatus.getText());
 		statMsgCount++;
 	}
-	
 	public void clearMsg()
 	{
 		txtStatus.setText("");

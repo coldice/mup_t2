@@ -269,4 +269,17 @@ public class ClientCommunicationHttp {
 			return new ArrayList<MUUser>();
 		}
 	}
+	
+	public MUUser getUserInfo(int userId) {
+		try {
+			JSONObject jObj = new JSONObject();
+			jObj.put("userid", userId);
+			JSONObject jRes = jPost(ComConstants.USER_INFO, jObj);
+			MUUser user = new MUUser(jRes.getInt("userid"),jRes.getString("name"),jRes.getInt("roomid"));
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new MUUser();
+		}
+	}
 }
