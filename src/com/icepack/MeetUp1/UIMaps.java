@@ -21,7 +21,7 @@ import com.icepack.MeetUp1.common.MULocation;
 import com.icepack.MeetUp1.common.MUUser;
 
 public class UIMaps extends MapActivity {
-	Settings settings;
+
 	MapView mMapView;
 	MapController mapControl;
     Projection projection;
@@ -98,7 +98,7 @@ public class UIMaps extends MapActivity {
         locTrackerList = new ArrayList<ULocTracker>();
         OwnLocTracker = new ULocTracker();
         
-        
+        userList = new ArrayList<MUUser>();
         
         mapsOverlays.MULocPoints = OwnLocTracker.refinedLocP;
 
@@ -106,7 +106,7 @@ public class UIMaps extends MapActivity {
         mapOvItemMgr.tfunc1(this.getResources().getDrawable(R.drawable.mark1), (MapView)this.findViewById(R.id.mapview1), OwnLocTracker.geoLocPoint);
         
 
-       
+       ((MeetUp1Activity)getParent()).tabCallback1(this);
         OwnLocTracker.uiHelper = this.uiHelper; //pass down ref
         
         //clientComm = new ClientCommunicationHttp(this.uiHelper.getStServerIp(), 23232);
@@ -122,10 +122,6 @@ public class UIMaps extends MapActivity {
         
         */
         
-        // TEST
-        	userList = new ArrayList<MUUser>();
-        	((UIMain)getParent()).tabCallback1(this);
-        	
         btnRelUList = (Button)findViewById(R.id.btnRelUserList);
         btnRelULoc = (Button)findViewById(R.id.btnRelUserLoc);
         
@@ -210,12 +206,8 @@ public class UIMaps extends MapActivity {
 		
 		//Update Online data
 		MULocation newMULoc = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime(), -1);
-		clientComm.setLocation( this.settings.getUserId(), newMULoc);
-		
-		uLocManager.updateOwnLoc(newLoc);
+		clientComm.setLocation(this.uiHelper.getStOwnUserId(), newMULoc);
 		*/
-		
-
 		
 		uLocManager.updateOwnLoc(newLoc);
 	}
@@ -247,12 +239,12 @@ public class UIMaps extends MapActivity {
 	}
 	
 	public void updateUserDataList() {
-		if(this.uiHelper.resetUserListFlag==1) {
+		if(uiHelper.resetUserListFlag==1) {
 			this.userList.clear();
 			this.uiHelper.resetUserListFlag=0;
 			this.uiHelper.dispMsg("*** RESETTED USERLIST ***");
 		}
-		ArrayList<MUUser> tmpUserList = clientComm.getUserList( this.settings.getUserId());
+		ArrayList<MUUser> tmpUserList = clientComm.getUserList(this.uiHelper.getStOwnUserId());
 		
 		this.uiHelper.dispMsg("got userlist with "+tmpUserList.size()+" user");
 		
@@ -270,7 +262,7 @@ public class UIMaps extends MapActivity {
 					found=true;
 				}
 			}
-			if(userList.get(i).id == this.settings.getUserId()) {
+			if(userList.get(i).id == this.uiHelper.getStOwnUserId()) {
 				myself=true;
 				this.uiHelper.dispMsg("found myself! id:"+userList.get(i).id);
 			}
@@ -282,7 +274,7 @@ public class UIMaps extends MapActivity {
 	}
 	
 	public void setupOwnUserData() {
-		ArrayList<MULocation> tmpLocList = clientComm.getLocation(this.settings.getUserId(), 1);
+		ArrayList<MULocation> tmpLocList = clientComm.getLocation(this.uiHelper.getStOwnUserId(), 1);
 		
 		this.uiHelper.dispMsg("got point list with"+tmpLocList.size()+" items");
 		OwnLocTracker.refinedLocP.clear();
