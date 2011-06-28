@@ -11,6 +11,7 @@ import android.widget.EditText;
 public class UISettings extends Activity {
 	
 	public UIHelper uiHelperRef;
+	public Settings settings;
 	public ClientCommunicationHttp clientComm;
 	
 	Button btnSave;
@@ -49,6 +50,10 @@ public class UISettings extends Activity {
 	
 	public void saveSettings() {
 		try {
+			this.settings.setServerIp(tVal1.getText().toString());
+			//DEBUG
+			this.settings.userInfo.id = new Integer(tVal2.getText().toString());
+			//OLD STUFF
 			this.uiHelperRef.setStServerIp(tVal1.getText().toString());
 			this.uiHelperRef.setStOwnUserId(new Integer(tVal2.getText().toString()));
 		} catch (Exception e) {
@@ -57,6 +62,10 @@ public class UISettings extends Activity {
     }
 	
 	public void loadSettings() {
+		tVal1.setText(this.settings.getServerIp());
+		//DEBUG
+		tVal2.setText(""+this.settings.userInfo.id);
+		//OLD STUFF
 		tVal1.setText(this.uiHelperRef.getStServerIp());
 		tVal2.setText(Integer.toString(this.uiHelperRef.getStOwnUserId()));
 	}
