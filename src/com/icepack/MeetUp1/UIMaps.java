@@ -21,7 +21,7 @@ import com.icepack.MeetUp1.common.MULocation;
 import com.icepack.MeetUp1.common.MUUser;
 
 public class UIMaps extends MapActivity {
-
+	Settings settings;
 	MapView mMapView;
 	MapController mapControl;
     Projection projection;
@@ -37,12 +37,15 @@ public class UIMaps extends MapActivity {
     MapsOverlayDraw mapsOverlays;
     MapsOverlayItemMgr mapOvItemMgr;
     
+    MapsOvLineDrawer mapsLineTest;
+    
     ArrayList<MUUser> userList;
     
     Button btnRelUList;
     Button btnRelULoc;
     public UIHelper uiHelper;
     
+    ULocMgr uLocManager; //Major object
     
     SeekBar rangeSel;
 
@@ -58,13 +61,44 @@ public class UIMaps extends MapActivity {
         mapControl = mMapView.getController();
         mapOverlays = mMapView.getOverlays();
 
+        uLocManager = new ULocMgr(mMapView);
+        
+        /*
+         * TESTCASE
+         */
+        Location testloc1 = new Location(LOCATION_SERVICE);
+        testloc1.setLatitude(38.964534);
+        testloc1.setLongitude(-103.143311);
+        
+        Location testloc2 = new Location(LOCATION_SERVICE);
+        testloc2.setLatitude(39.8136);
+        testloc2.setLongitude(-92.947998);
+        
+        Location testloc3 = new Location(LOCATION_SERVICE);
+        testloc3.setLatitude(34.67478);
+        testloc3.setLongitude(-97.364502);
+        
+        uLocManager.updateOwnLoc(testloc1);
+        uLocManager.updateOwnLoc(testloc2);
+        uLocManager.updateOwnLoc(testloc3);
+        
+        /*
         mapsOverlays = new MapsOverlayDraw(mMapView);
         mapOvItemMgr = new MapsOverlayItemMgr();
+        
+        mapsLineTest = new MapsOvLineDrawer(mMapView);
+        
+        ArrayList<MULocation> testLocs = new ArrayList<MULocation>();
+        testLocs.add(new MULocation(38.964534, -103.143311, 1, 1));
+        testLocs.add(new MULocation(39.8136, -92.947998, 1, 2));
+        testLocs.add(new MULocation(34.67478, -97.364502, 1, 3));
+        
+        mapsLineTest.MULocPoints = testLocs;
         
         locTrackerList = new ArrayList<ULocTracker>();
         OwnLocTracker = new ULocTracker();
         
-        userList = new ArrayList<MUUser>();
+        
         
         mapsOverlays.MULocPoints = OwnLocTracker.refinedLocP;
 
@@ -72,7 +106,7 @@ public class UIMaps extends MapActivity {
         mapOvItemMgr.tfunc1(this.getResources().getDrawable(R.drawable.mark1), (MapView)this.findViewById(R.id.mapview1), OwnLocTracker.geoLocPoint);
         
 
-       ((MeetUp1Activity)getParent()).tabCallback1(this);
+       
         OwnLocTracker.uiHelper = this.uiHelper; //pass down ref
         
         //clientComm = new ClientCommunicationHttp(this.uiHelper.getStServerIp(), 23232);
@@ -83,9 +117,14 @@ public class UIMaps extends MapActivity {
         netLocMgr.fLocDrawable = this.getResources().getDrawable(R.drawable.mark2);
         //this sets drawable for secondary items
         
-        mapOverlays.add(mapsOverlays);
+        //mapOverlays.add(mapsOverlays);
+        mapOverlays.add(mapsLineTest);
         
-        
+        */
+        // TEST
+        	userList = new ArrayList<MUUser>();
+        	((UIMain)getParent()).tabCallback1(this);
+        	
         btnRelUList = (Button)findViewById(R.id.btnRelUserList);
         btnRelULoc = (Button)findViewById(R.id.btnRelUserLoc);
         
@@ -145,12 +184,18 @@ public class UIMaps extends MapActivity {
 		return false;
 	}
 	
+	/* called from Location Manager (GPSMgr) on new (own) Location Data
+	 * 
+	 */
 	public void updateOwnLocData(Location newLoc)
 	{
-		//uiHelper.dispMsg("New Loc: "+newLoc.getLatitude()+" : "+newLoc.getLongitude());
+		
+		uiHelper.dispMsg("New Loc: "+newLoc.getLatitude()+" : "+newLoc.getLongitude());
+		/*
 		OwnLocTracker.updateCurrentLoc(newLoc);
 		//update down
 		//mapsOverlays.updateOverlayItems();
+		
 		
 		tmpPoint = new GeoPoint((int)(newLoc.getLatitude()*1000000), (int)(newLoc.getLongitude()*1000000));
 		mapControl.animateTo(tmpPoint);
@@ -164,7 +209,12 @@ public class UIMaps extends MapActivity {
 		
 		//Update Online data
 		MULocation newMULoc = new MULocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTime(), -1);
-		clientComm.setLocation(this.uiHelper.getStOwnUserId(), newMULoc);
+		clientComm.setLocation( this.settings.getUserId(), newMULoc);
+		
+		uLocManager.updateOwnLoc(newLoc);
+		*/
+		
+		uLocManager.updateOwnLoc(newLoc);
 	}
 	
 	public void updateMapViewSet()
@@ -194,12 +244,12 @@ public class UIMaps extends MapActivity {
 	}
 	
 	public void updateUserDataList() {
-		if(uiHelper.resetUserListFlag==1) {
+		if(this.uiHelper.resetUserListFlag==1) {
 			this.userList.clear();
 			this.uiHelper.resetUserListFlag=0;
 			this.uiHelper.dispMsg("*** RESETTED USERLIST ***");
 		}
-		ArrayList<MUUser> tmpUserList = clientComm.getUserList(this.uiHelper.getStOwnUserId());
+		ArrayList<MUUser> tmpUserList = clientComm.getUserList( this.settings.getUserId());
 		
 		this.uiHelper.dispMsg("got userlist with "+tmpUserList.size()+" user");
 		
@@ -217,7 +267,7 @@ public class UIMaps extends MapActivity {
 					found=true;
 				}
 			}
-			if(userList.get(i).id == this.uiHelper.getStOwnUserId()) {
+			if(userList.get(i).id == this.settings.getUserId()) {
 				myself=true;
 				this.uiHelper.dispMsg("found myself! id:"+userList.get(i).id);
 			}
@@ -229,7 +279,7 @@ public class UIMaps extends MapActivity {
 	}
 	
 	public void setupOwnUserData() {
-		ArrayList<MULocation> tmpLocList = clientComm.getLocation(this.uiHelper.getStOwnUserId(), 1);
+		ArrayList<MULocation> tmpLocList = clientComm.getLocation(this.settings.getUserId(), 1);
 		
 		this.uiHelper.dispMsg("got point list with"+tmpLocList.size()+" items");
 		OwnLocTracker.refinedLocP.clear();

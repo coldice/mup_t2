@@ -12,12 +12,6 @@ public class UIHelper {
 	private int statMsgCount = 0;
 	private int maxMsgCount = 50;
 	
-	//internal options
-	private int ST_own_userid;
-	private String ST_server;
-	
-	//ADDED! (temp)
-	private MUUser user;
 
 	
 	//set through
@@ -26,8 +20,7 @@ public class UIHelper {
 	
 	public UIHelper()
 	{
-		this.ST_own_userid = -1;
-		this.ST_server = "";
+		this.resetUserListFlag = 0;
 	}
 	
 	public void setupUIHelperViews(TextView txtStatusl, TextView txtStatusl2, TextView txtTopstatl) {
@@ -61,7 +54,7 @@ public class UIHelper {
 	{
 		txtTopstat.setText(message);
 	}
-	
+	/*
 	public void setStOwnUserId(int id)
 	{
 		this.ST_own_userid = id;
@@ -80,5 +73,5 @@ public class UIHelper {
 	public String getStServerIp()
 	{
 		return this.ST_server;
-	}
+	}*/
 }

@@ -20,6 +20,7 @@ public class ComConstants {
 	public static final byte ERROR = 7;
 	public static final byte NOERROR = 8;
 	public static final byte LOGIN = 12;
+	public static final byte LOGOUT = 14;
 	public static final byte USER_INFO = 13;
 	
 	//Debug

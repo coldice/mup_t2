@@ -131,7 +131,6 @@ public class ClientCommunicationHttp {
 		StringEntity entity = new StringEntity(jEntity.toString());
 		return post(entity);
 	}
-	
 	public boolean test() {
 		try {
 			JSONObject jObj = new JSONObject();
@@ -141,6 +140,20 @@ public class ClientCommunicationHttp {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+	public int login(String username, String password) {
+		try {
+			//TODO Encrypt
+			JSONObject jObj = new JSONObject();
+			jObj.put("username", username);
+			jObj.put("password", password);
+			JSONObject jRes = jPost(ComConstants.LOGIN, jObj);
+			return jRes.getInt("userid");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 	/**

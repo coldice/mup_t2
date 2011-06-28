@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class UISettings extends Activity {
@@ -17,6 +18,7 @@ public class UISettings extends Activity {
 	Button btnSave;
 	EditText tVal1;
 	EditText tVal2;
+	CheckBox cbAutologin;
 	
 	Button test;
 	
@@ -25,10 +27,11 @@ public class UISettings extends Activity {
         
         setContentView(R.layout.tvsettings);
         
-        ((MeetUp1Activity)this.getParent()).tabCallback3(this);
+        ((UIMain)this.getParent()).tabCallback3(this);
         btnSave = (Button)findViewById(R.id.btnsaveset);
         tVal1 = (EditText)findViewById(R.id.inp_val1);
         tVal2 = (EditText)findViewById(R.id.inp_val2);
+        cbAutologin = (CheckBox)findViewById(R.id.autologin);
         test = (Button)findViewById(R.id.test);
         test.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -48,14 +51,15 @@ public class UISettings extends Activity {
         
 	}
 	
+	
 	public void saveSettings() {
 		try {
 			this.settings.setServerIp(tVal1.getText().toString());
+			this.settings.setAutologin(cbAutologin.isChecked());
 			//DEBUG
-			this.settings.userInfo.id = new Integer(tVal2.getText().toString());
-			//OLD STUFF
-			this.uiHelperRef.setStServerIp(tVal1.getText().toString());
-			this.uiHelperRef.setStOwnUserId(new Integer(tVal2.getText().toString()));
+			this.settings.setUserId(new Integer(tVal2.getText().toString()));
+			
+			this.settings.save(); //TODO Catch 0 Exception
 		} catch (Exception e) {
 			//error
 		}
@@ -63,10 +67,9 @@ public class UISettings extends Activity {
 	
 	public void loadSettings() {
 		tVal1.setText(this.settings.getServerIp());
+		cbAutologin.setChecked(settings.getAutologin());
 		//DEBUG
-		tVal2.setText(""+this.settings.userInfo.id);
-		//OLD STUFF
-		tVal1.setText(this.uiHelperRef.getStServerIp());
-		tVal2.setText(Integer.toString(this.uiHelperRef.getStOwnUserId()));
+		tVal2.setText(""+this.settings.getUserId());
+		
 	}
 }

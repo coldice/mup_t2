@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/llogin"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="5dp">
+
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/desc_username" android:text="Username" android:layout_marginLeft="14px"></TextView>
+    <EditText android:id="@+id/username" android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="username"></EditText>
+    <TextView android:text="Password" android:id="@+id/desc_password" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="14px"></TextView>
+    <EditText android:id="@+id/password" android:password="true" android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="password"></EditText>
+  	<RelativeLayout android:layout_width="fill_parent" android:id="@+id/rl_loginsub1" android:gravity="bottom" android:layout_gravity="fill|bottom" android:layout_height="60dip">
+       	<Button android:text="Login" android:layout_width="wrap_content"  android:id="@+id/login" android:layout_height="wrap_content"></Button>
+				<CheckBox android:id="@+id/autologin" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:layout_height="wrap_content" android:text="Autologin"></CheckBox>
+		</RelativeLayout>
+</LinearLayout>    

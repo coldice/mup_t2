@@ -16,6 +16,7 @@ import com.icepack.MeetUp1.common.MURoom;
 import com.icepack.MeetUp1.common.MUUser;
 
 public class UIRooms extends Activity {
+	Settings settings;
 	ListView roomListView;
 	Button btnRefreshList;
 	Button btnCreateRoom;
@@ -52,7 +53,7 @@ public class UIRooms extends Activity {
         //roomListView.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, COUNTRIES));
         //roomListView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 , roomdata_arr));  // Init Replace
         
-        ((MeetUp1Activity)this.getParent()).tabCallback2(this);
+        ((UIMain)this.getParent()).tabCallback2(this);
         
         // Init Content
         updateRoomList();
@@ -84,7 +85,7 @@ public class UIRooms extends Activity {
           	    if(currentMenuState==1) {
           	    	if(roomList.get(position).id == -2) {
           	    		createForm.setVisibility(0);
-          	    		inpCreateName.setText("Id"+uiHelperRef.getStOwnUserId()+" room");
+          	    		inpCreateName.setText("Id"+settings.getUserId()+" room");
           	    	} else {
           	    		joinRoom(position);
           	    		updateUserList(position);
@@ -116,7 +117,7 @@ public class UIRooms extends Activity {
 		//server call
 		if(this.clientComm!=null)
 		{
-			showRoomListMessage("con server:"+uiHelperRef.getStServerIp());
+			showRoomListMessage("con server:"+settings.getServerIp());
 			this.roomList = clientComm.getRoomList();
 		}
 		
@@ -149,7 +150,7 @@ public class UIRooms extends Activity {
 		if(this.clientComm!=null)
 		{
 			//showRoomListMessage("con server:"+uiHelperRef.getStServerIp());
-			this.userList = clientComm.getUserList(uiHelperRef.getStOwnUserId());
+			this.userList = clientComm.getUserList(settings.getUserId());
 		}
 		
 		//set up ui list
@@ -164,14 +165,14 @@ public class UIRooms extends Activity {
 		currentMenuState = 2;
 	}
 	public void joinRoom(int roomId) {
-		this.clientComm.LogInToRoom(this.uiHelperRef.getStOwnUserId(), roomId);
+		this.clientComm.LogInToRoom(settings.getUserId(), roomId);
 		//this.showRoomListMessage("joining Room: "+roomId); Replace UserList
 		this.uiHelperRef.resetUserListFlag = 1;
 	}
 	
 	public void createRoom() {
 		String roomName = inpCreateName.getText().toString();
-		int roomId = this.clientComm.createRoom(this.uiHelperRef.getStOwnUserId(), roomName);
+		int roomId = this.clientComm.createRoom(settings.getUserId(), roomName);
 		updateUserList(roomId);
 	}
 
