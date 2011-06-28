@@ -121,6 +121,7 @@ public class UIMaps extends MapActivity {
         mapOverlays.add(mapsLineTest);
         
         */
+        
         // TEST
         	userList = new ArrayList<MUUser>();
         	((UIMain)getParent()).tabCallback1(this);
@@ -213,6 +214,8 @@ public class UIMaps extends MapActivity {
 		
 		uLocManager.updateOwnLoc(newLoc);
 		*/
+		
+
 		
 		uLocManager.updateOwnLoc(newLoc);
 	}
