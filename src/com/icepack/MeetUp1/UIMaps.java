@@ -46,6 +46,7 @@ public class UIMaps extends MapActivity {
     public UIHelper uiHelper;
     
     ULocMgr uLocManager; //Major object
+    Settings settings;
     
     SeekBar rangeSel;
 
@@ -244,7 +245,7 @@ public class UIMaps extends MapActivity {
 			this.uiHelper.resetUserListFlag=0;
 			this.uiHelper.dispMsg("*** RESETTED USERLIST ***");
 		}
-		ArrayList<MUUser> tmpUserList = clientComm.getUserList(this.uiHelper.getStOwnUserId());
+		ArrayList<MUUser> tmpUserList = clientComm.getUserList(this.settings.getUserId());
 		
 		this.uiHelper.dispMsg("got userlist with "+tmpUserList.size()+" user");
 		
@@ -262,7 +263,7 @@ public class UIMaps extends MapActivity {
 					found=true;
 				}
 			}
-			if(userList.get(i).id == this.uiHelper.getStOwnUserId()) {
+			if(userList.get(i).id == this.settings.getUserId()) {
 				myself=true;
 				this.uiHelper.dispMsg("found myself! id:"+userList.get(i).id);
 			}
@@ -274,7 +275,7 @@ public class UIMaps extends MapActivity {
 	}
 	
 	public void setupOwnUserData() {
-		ArrayList<MULocation> tmpLocList = clientComm.getLocation(this.uiHelper.getStOwnUserId(), 1);
+		ArrayList<MULocation> tmpLocList = clientComm.getLocation(this.settings.getUserId(), 1);
 		
 		this.uiHelper.dispMsg("got point list with"+tmpLocList.size()+" items");
 		OwnLocTracker.refinedLocP.clear();
